@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img"
+     aria-label="100 Машин — автосервис">
+  <rect width="64" height="64" rx="12" fill="#14181c"/>
+  <text x="32" y="29" text-anchor="middle"
+        font-family="Golos Text, system-ui, Arial, sans-serif"
+        font-size="21" font-weight="700" fill="#ffffff" letter-spacing="-0.5">100</text>
+  <text x="32" y="47" text-anchor="middle"
+        font-family="Golos Text, system-ui, Arial, sans-serif"
+        font-size="12" font-weight="700" fill="#e8590c" letter-spacing="0.5">МАШИН</text>
+</svg>

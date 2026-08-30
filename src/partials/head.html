@@ -1,0 +1,66 @@
+{{!--
+  head.html — шаблон <head>. Сборщик подставляет:
+    {{TITLE}}      — заголовок страницы (до ~60 знаков)
+    {{DESC}}       — описание (до ~160 знаков)
+    {{CANONICAL}}  — абсолютный адрес страницы
+    {{OG_IMAGE}}   — картинка для соцсетей
+    {{ROBOTS}}     — правило индексации
+    {{HEAD_EXTRA}} — JSON-LD и прочие вставки конкретной страницы
+--}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta name="robots" content="{{ROBOTS}}">
+
+{{!-- Подтверждение прав в панелях вебмастера. Коды вписать после регистрации. --}}
+<meta name="yandex-verification" content="REPLACE_YANDEX_VERIFICATION">
+<meta name="google-site-verification" content="REPLACE_GOOGLE_VERIFICATION">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Автосервис «100 Машин», Воронеж">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:url" content="{{CANONICAL}}">
+<meta property="og:image" content="{{OG_IMAGE}}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Автосервис «100 Машин» в Воронеже">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{DESC}}">
+<meta name="twitter:image" content="{{OG_IMAGE}}">
+
+<meta name="geo.region" content="RU-VOR">
+<meta name="geo.placename" content="Воронеж">
+<meta name="theme-color" content="#14181c">
+
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+
+{{!-- Предзагружаем только кириллический начерк: латиница почти не нужна. --}}
+<link rel="preload" href="/assets/fonts/golos-text-cyrillic-wght.woff2" as="font"
+      type="font/woff2" crossorigin>
+
+{{!-- Критический минимум, чтобы не было вспышки белого фона. --}}
+<style>
+  :root { --paper-050: #fbfaf8; --ink-900: #14181c; }
+  html { background-color: #fbfaf8; color: #14181c; }
+  body { margin: 0; }
+</style>
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+{{!--
+  Композиция главной и уточнения по блокам лежат отдельными файлами:
+  так правки в них не задевают общую дизайн-систему. Порядок важен —
+  подключаются после styles.css, внутри того же слоя components.
+--}}
+<link rel="stylesheet" href="/assets/css/components/hero.css">
+<link rel="stylesheet" href="/assets/css/components/blocks.css">
+{{HEAD_EXTRA}}

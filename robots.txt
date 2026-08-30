@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /spasibo/
+
+User-agent: Yandex
+Allow: /
+Disallow: /spasibo/
+Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&gclid&from
+
+Sitemap: https://100mashin.ru/sitemap.xml

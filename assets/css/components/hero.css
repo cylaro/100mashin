@@ -1,0 +1,711 @@
+/* ==========================================================================
+   hero.css — первый экран и секции главной страницы.
+
+   Композиция первого экрана и секций главной страницы.
+   Подключается после styles.css — слой components даёт приоритет
+   без повышения специфичности.
+
+   ========================================================================== */
+@layer components {
+  /* ========================================================================
+     Первый экран
+     Две колонки на широком экране, одна на узком. Справа — карточка
+     со ставкой нормочаса: главный аргумент и ответ на вопрос «сколько».
+     ====================================================================== */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--color-surface);
+    border-block-end: var(--border-1);
+    /* Спокойный вертикальный переход к следующей секции */
+    background-image: linear-gradient(
+      180deg,
+      var(--color-surface) 0%,
+      var(--color-surface) 62%,
+      var(--paper-100) 100%
+    );
+  }
+
+    .hero__inner {
+    display: grid;
+    gap: var(--sp-10);
+    align-items: start;
+    padding-block: clamp(var(--sp-10), 6vw, var(--sp-20));
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 62rem) {
+    .hero--split .hero__inner {
+      /* Левая колонка заметно шире: заголовок должен доминировать. */
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--sp-12);
+      align-items: center;
+    }
+  }
+
+  /* --- левая колонка --------------------------------------------------- */
+  .hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-block-end: var(--sp-5);
+    padding: var(--sp-1) var(--sp-3) var(--sp-1) var(--sp-2);
+    background-color: var(--color-surface-accent);
+    border: 1px solid var(--color-accent-soft);
+    border-radius: var(--radius-pill);
+    color: var(--color-accent-text);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+  }
+
+  .hero__eyebrow-dot {
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    flex: none;
+  }
+
+  .hero__title {
+    margin: 0;
+    font-size: var(--fs-800);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-tight);
+    letter-spacing: var(--ls-tight);
+    color: var(--color-text-strong);
+    text-wrap: balance;
+  }
+
+  /* Акцент в заголовке: подчёркивание, а не курсив */
+  .hero__title em {
+    font-style: normal;
+    color: var(--color-accent-text);
+    /* Не рвётся на переносах строк */
+    background-image: linear-gradient(var(--color-accent), var(--color-accent));
+    background-size: 100% 3px;
+    background-position: 0 calc(100% - 0.06em);
+    background-repeat: no-repeat;
+    padding-block-end: 0.06em;
+  }
+
+  .hero__lead {
+    max-inline-size: 46ch;
+    margin-block-start: var(--sp-5);
+    color: var(--color-text);
+    font-size: var(--fs-500);
+    line-height: var(--lh-base);
+    text-wrap: pretty;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-block-start: var(--sp-8);
+  }
+
+  /* Цифра сверху, подпись под ней. Вертикальные линии собирают пункты
+     в один блок показателей */
+  .hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-4) 0;
+    margin-block-start: var(--sp-8);
+    padding-block-start: var(--sp-6);
+    padding-inline: 0;
+    border-block-start: var(--border-1);
+    list-style: none;
+  }
+
+  .hero__trust > li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-inline: var(--sp-5);
+  }
+
+  .hero__trust > li:first-child {
+    padding-inline-start: 0;
+  }
+
+  /* Линия-разделитель между показателями. */
+  .hero__trust > li + li {
+    border-inline-start: var(--border-1);
+  }
+
+  .hero__trust b {
+    color: var(--color-text-strong);
+    font-size: var(--fs-600);
+    font-weight: var(--fw-bold);
+    line-height: 1.05;
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: var(--ls-tight);
+  }
+
+  .hero__trust span {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  /* --- правая колонка: карточка со ставкой ----------------------------- */
+  .hero-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    box-shadow: var(--shadow-2);
+    overflow: hidden;
+  }
+
+  /* Шапка карточки: тёмная, чтобы цифра ставки читалась как главная. */
+  .hero-rate {
+    padding: var(--sp-6);
+    background-color: var(--color-surface-invert);
+    color: var(--color-text-invert);
+  }
+
+  .hero-rate__label {
+    display: block;
+    color: var(--paper-400);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+  }
+
+  .hero-rate__value {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-2);
+    color: #fff;
+    font-size: clamp(2.5rem, 2rem + 2.6vw, 3.5rem);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    letter-spacing: var(--ls-tight);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .hero-rate__cur {
+    color: var(--amber-400);
+    font-size: 0.42em;
+    font-weight: var(--fw-semibold);
+    letter-spacing: 0;
+  }
+
+  .hero-rate__note {
+    margin-block-start: var(--sp-3);
+    color: var(--paper-300);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+
+  /* Без крупной цифры: там, где главный аргумент не цена, а подход */
+  .hero-rate--text .hero-rate__headline {
+    margin-block-start: var(--sp-2);
+    color: #fff;
+    font-size: clamp(1.375rem, 1.15rem + 1vw, 1.75rem);
+    font-weight: var(--fw-bold);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-tight);
+  }
+
+  /* Свои маркеры-черты вместо галочек */
+  .hero-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    margin: 0;
+    padding: var(--sp-6);
+    list-style: none;
+  }
+
+  .hero-card__list li {
+    position: relative;
+    padding-inline-start: var(--sp-6);
+    color: var(--color-text);
+    font-size: var(--fs-400);
+    line-height: var(--lh-snug);
+  }
+
+  .hero-card__list li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-start: 0.6em;
+    inline-size: var(--sp-4);
+    block-size: 2px;
+    background-color: var(--color-accent);
+  }
+
+  .hero-card__list b {
+    color: var(--color-text-strong);
+    font-weight: var(--fw-semibold);
+  }
+
+  /* Рейтинг Яндекса: внешнее подтверждение */
+  .hero-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-2) var(--sp-3);
+    padding: var(--sp-4) var(--sp-6);
+    border-block-start: var(--border-1);
+    background-color: var(--color-surface-2);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+  }
+
+  .hero-card__score {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-1);
+    color: var(--color-text-strong);
+    font-weight: var(--fw-bold);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .hero-card__stars {
+    /* Затемнённый оттенок: рейтинг — значимая информация */
+    color: var(--amber-700);
+    letter-spacing: 0.08em;
+  }
+
+  .hero-card__meta {
+    color: var(--color-text-muted);
+  }
+
+  .hero-card__foot a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-link);
+  }
+
+  /* ========================================================================
+     Направления работ
+     Три главных направления крупно, остальное — строкой ссылок:
+     так видна специализация, а не «мы делаем всё».
+     ====================================================================== */
+  .dirs {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 52rem) {
+    .dirs {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .dir {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    transition: border-color var(--dur-base) var(--ease-out),
+      box-shadow var(--dur-base) var(--ease-out),
+      transform var(--dur-base) var(--ease-out);
+  }
+
+  .dir__num {
+    
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-caps);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .dir__title {
+    margin: 0;
+    font-size: var(--fs-600);
+    line-height: var(--lh-snug);
+  }
+
+  /* Ссылка растянута на всю карточку */
+  .dir__title a {
+    color: var(--color-text-strong);
+    text-decoration: none;
+  }
+
+  .dir__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+
+  .dir__text {
+    color: var(--color-text-muted);
+    font-size: var(--fs-400);
+    line-height: var(--lh-base);
+  }
+
+  .dir__price {
+    margin-block-start: auto;
+    padding-block-start: var(--sp-4);
+    border-block-start: var(--border-1);
+    color: var(--color-text-strong);
+    font-size: var(--fs-500);
+    font-weight: var(--fw-bold);
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: var(--ls-num);
+  }
+
+  .dir__price span {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-regular);
+    letter-spacing: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .dir:hover {
+      border-color: var(--color-accent);
+      box-shadow: var(--shadow-3);
+      transform: translateY(-2px);
+    }
+  }
+
+  /* Остальные услуги — компактной строкой */
+  .dirs-more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-6);
+    padding: 0;
+    list-style: none;
+  }
+
+  .dirs-more a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    padding-inline: var(--sp-4);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-pill);
+    color: var(--color-text);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-medium);
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out),
+      border-color var(--dur-fast) var(--ease-out),
+      color var(--dur-fast) var(--ease-out);
+  }
+
+  .dirs-more a:hover {
+    background-color: var(--color-surface-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-text);
+  }
+
+  /* ========================================================================
+     Как считаем деньги: пример расчёта крупными цифрами
+     ====================================================================== */
+  .calc-demo {
+    display: grid;
+    gap: var(--sp-8);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+  }
+
+  @media (min-width: 56rem) {
+    .calc-demo {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: var(--sp-12);
+    }
+  }
+
+  /* Нормочас x трудоёмкость = сумма, как строка чека */
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    box-shadow: var(--shadow-1);
+  }
+
+  /* Подписи разной длины переносятся по-разному, поэтому значения
+     прижимаем к низу — они выстраиваются по одной линии. */
+  .formula__item {
+    display: flex;
+    flex: 1 1 6rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sp-1);
+    min-inline-size: 0;
+  }
+
+  .formula__value {
+    margin-block-start: auto;
+  }
+
+  .formula__label {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  .formula__value {
+    color: var(--color-text-strong);
+    font-size: var(--fs-600);
+    font-weight: var(--fw-bold);
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: var(--ls-num);
+    white-space: nowrap;
+  }
+
+  /* Знак операции встаёт на линию значений, а не по центру всей колонки. */
+  .formula__op {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex: none;
+    color: var(--color-text-muted);
+    font-size: var(--fs-600);
+    font-weight: var(--fw-regular);
+    line-height: 1.35;
+  }
+
+  .formula__item--result .formula__value {
+    color: var(--color-accent-text);
+  }
+
+  /* ========================================================================
+     Полоса статистики
+     ====================================================================== */
+  .figures {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    background-color: var(--color-border);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    overflow: hidden;
+  }
+
+  @media (min-width: 52rem) {
+    .figures {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .figure {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-6) var(--sp-5);
+    background-color: var(--color-surface);
+  }
+
+  .figure__num {
+    color: var(--color-text-strong);
+    font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    letter-spacing: var(--ls-tight);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .figure__num span {
+    color: var(--color-accent);
+    font-size: 0.5em;
+    letter-spacing: 0;
+  }
+
+  .figure__label {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  /* ========================================================================
+     Отзывы на главной: две-три сильные цитаты, без сеток-простыней
+     ====================================================================== */
+  .quotes {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 56rem) {
+    .quotes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .quote {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+  }
+
+  /* Типографская кавычка вместо иконки */
+  .quote::before {
+    content: "«";
+    color: var(--color-accent-soft);
+    font-size: 3rem;
+    font-weight: var(--fw-bold);
+    line-height: 0.7;
+  }
+
+  .quote__text {
+    flex: 1;
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--fs-400);
+    line-height: var(--lh-loose);
+  }
+
+  .quote__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-2) var(--sp-3);
+    padding-block-start: var(--sp-4);
+    border-block-start: var(--border-1);
+    font-size: var(--fs-300);
+  }
+
+  .quote__author {
+    color: var(--color-text-strong);
+    font-weight: var(--fw-semibold);
+  }
+
+  .quote__meta {
+    color: var(--color-text-muted);
+  }
+
+  /* ========================================================================
+     Появление секций при прокрутке
+     Без поддержки animation-timeline всё видно сразу, поэтому opacity: 0
+     в базовом состоянии не задаём.
+     ====================================================================== */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero__body > *,
+      .hero-card,
+      .dir,
+      .figure,
+      .quote,
+      .formula {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 18%;
+      }
+
+      /* Каскад внутри группы */
+      .dirs .dir:nth-child(2),
+      .quotes .quote:nth-child(2) {
+        animation-range: entry 0% cover 22%;
+      }
+
+      .dirs .dir:nth-child(3),
+      .quotes .quote:nth-child(3) {
+        animation-range: entry 0% cover 26%;
+      }
+    }
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   Ритм страницы
+   Одинаковый шаг между всеми секциями лишает страницу группировки:
+   смысловые «главы» получают больше воздуха, продолжения — меньше.
+   ========================================================================== */
+@layer components {
+  /* Сжимаем вертикаль: до первого содержательного блока не должно быть
+     двух экранов прокрутки */
+  @media (max-width: 47.99rem) {
+    .hero__inner {
+      padding-block: var(--sp-8) var(--sp-10);
+      gap: var(--sp-6);
+    }
+
+    .hero__actions {
+      margin-block-start: var(--sp-6);
+      /* Кнопки в столбик: две в ряд на 390px не помещаются без переносов. */
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--sp-2);
+    }
+
+    /* Три в ряд, без вертикальных разделителей: они съедают ширину */
+    .hero__trust {
+      margin-block-start: var(--sp-6);
+      padding-block-start: var(--sp-4);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--sp-3) var(--sp-2);
+    }
+
+    .hero__trust > li,
+    .hero__trust > li:first-child {
+      padding-inline: 0;
+      border-inline-start: 0;
+    }
+
+    .hero__trust b {
+      font-size: var(--fs-500);
+    }
+
+    .hero-rate {
+      padding: var(--sp-5);
+    }
+
+    .hero-card__list {
+      padding: var(--sp-5);
+      gap: var(--sp-2);
+    }
+  }
+
+  /* Продолжение предыдущей мысли: меньше воздуха сверху */
+  .section--follow {
+    padding-block-start: clamp(var(--sp-4), 2vw, var(--sp-8));
+  }
+
+  /* Заключительная секция главы: убираем лишний воздух снизу. */
+  .section--close {
+    padding-block-end: clamp(var(--sp-6), 3vw, var(--sp-12));
+  }
+
+  /* Смысловой водораздел: больше воздуха, страница «дышит» по главам. */
+  .section--chapter {
+    padding-block: clamp(var(--sp-12), 8vw, var(--sp-24));
+  }
+
+  /* Разделитель там, где смены фона недостаточно */
+  .section--rule {
+    border-block-start: var(--border-1);
+  }
+}

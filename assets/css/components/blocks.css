@@ -1,0 +1,915 @@
+/* ==========================================================================
+   blocks.css — переиспользуемые блоки: адреса, контакты, форма записи.
+
+   Подключается после styles.css в том же слое components.
+   ========================================================================== */
+@layer components {
+  /* ========================================================================
+     Две площадки
+     Карточки одинаковы по весу: площадки равнозначны и различаются
+     только назначением.
+     ====================================================================== */
+  .sites {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 56rem) {
+    .sites {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--sp-6);
+    }
+  }
+
+  .site {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    overflow: hidden;
+    transition: box-shadow var(--dur-base) var(--ease-out);
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .site:hover {
+      box-shadow: var(--shadow-3);
+    }
+  }
+
+  .site__head {
+    padding: var(--sp-6) var(--sp-6) var(--sp-5);
+    border-block-end: var(--border-1);
+  }
+
+  /* Надзаголовок с короткой чертой, как метка на схеме */
+  .site__label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: var(--color-accent-text);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+  }
+
+  .site__label::before {
+    content: "";
+    inline-size: 1.25rem;
+    block-size: 2px;
+    background-color: var(--color-accent);
+    flex: none;
+  }
+
+  .site__name {
+    margin-block: var(--sp-3) var(--sp-1);
+    font-size: var(--fs-600);
+    line-height: var(--lh-snug);
+    color: var(--color-text-strong);
+  }
+
+  .site__district {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  /* Чем площадки отличаются по существу */
+  .site__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: var(--sp-4);
+    padding: 0;
+    list-style: none;
+  }
+
+  .site__tags li {
+    padding: var(--sp-1) var(--sp-3);
+    background-color: var(--color-surface-steel);
+    border: 1px solid var(--color-structure-soft);
+    border-radius: var(--radius-pill);
+    color: var(--color-structure);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-medium);
+  }
+
+  .site__rows {
+    display: grid;
+    gap: var(--sp-4);
+    margin: 0;
+    padding: var(--sp-5) var(--sp-6);
+  }
+
+  .site__rows > div {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: var(--sp-4);
+    align-items: baseline;
+  }
+
+  @media (max-width: 26rem) {
+    .site__rows > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+    }
+  }
+
+  .site__rows dt {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+  }
+
+  .site__rows dd {
+    margin: 0;
+    color: var(--color-text);
+    font-size: var(--fs-400);
+    line-height: var(--lh-snug);
+    overflow-wrap: break-word;
+  }
+
+  .site__phone {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-text-strong);
+    font-size: var(--fs-500);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-num);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .site__phone:hover {
+    color: var(--color-accent-text);
+  }
+
+  /* Карта во всю ширину карточки */
+  .site .map {
+    border-inline: 0;
+    border-radius: 0;
+    border-block-end: 0;
+    aspect-ratio: 16 / 9;
+    min-block-size: 15rem;
+  }
+
+  .site__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-block-start: auto;
+    padding: var(--sp-5) var(--sp-6);
+    border-block-start: var(--border-1);
+    background-color: var(--color-surface-2);
+  }
+
+  /* Помогает выбрать площадку */
+  .sites__hint {
+    margin-block-start: var(--sp-6);
+    padding: var(--sp-4) var(--sp-5);
+    background-color: var(--color-surface-accent);
+    border-inline-start: 3px solid var(--color-accent);
+    border-radius: var(--radius-2);
+    color: var(--color-text);
+    font-size: var(--fs-400);
+    line-height: var(--lh-base);
+    max-inline-size: var(--measure);
+  }
+
+  .sites__hint strong {
+    color: var(--color-text-strong);
+  }
+
+
+  /* ==========================================================================
+     Выравнивание колонок по высоте
+     При align-items: start короткая врезка заканчивается выше длинной
+     колонки и блок выглядит несобранным.
+     ========================================================================== */
+  @media (min-width: 56rem) {
+    .split--stretch {
+      align-items: stretch;
+    }
+
+    .split--stretch > .callout,
+    .split--stretch > .info-card {
+      block-size: 100%;
+    }
+  }
+
+  /* ========================================================================
+     Контакты: единая сетка каналов связи
+     ====================================================================== */
+  .contact-grid {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: minmax(0, 1fr);
+    background-color: var(--color-border);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+    overflow: hidden;
+  }
+
+  @media (min-width: 40rem) {
+    .contact-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .contact-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    transition: background-color var(--dur-fast) var(--ease-out);
+  }
+
+  .contact:hover {
+    background-color: var(--color-surface-2);
+  }
+
+  .contact__label {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+  }
+
+  .contact__value {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    color: var(--color-text-strong);
+    font-size: var(--fs-500);
+    font-weight: var(--fw-bold);
+    letter-spacing: var(--ls-num);
+    text-decoration: none;
+    overflow-wrap: break-word;
+  }
+
+  .contact__value:hover {
+    color: var(--color-accent-text);
+  }
+
+  .contact__note {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  /* Главный канал — запись на ремонт */
+  .contact--primary {
+    background-color: var(--color-surface-accent);
+  }
+
+  .contact--primary:hover {
+    background-color: var(--amber-100);
+  }
+
+  .contact--primary .contact__label {
+    color: var(--color-accent-text);
+  }
+
+  /* ========================================================================
+     Часы работы и реквизиты — спокойная таблица без «карточной» пестроты
+     ====================================================================== */
+  .info-split {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  @media (min-width: 56rem) {
+    .info-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--sp-8);
+    }
+  }
+
+  .info-card {
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+  }
+
+  .info-card__title {
+    margin-block-end: var(--sp-4);
+    padding-block-end: var(--sp-3);
+    border-block-end: var(--border-1);
+    font-size: var(--fs-500);
+    color: var(--color-text-strong);
+  }
+
+  .hours {
+    display: grid;
+    gap: var(--sp-3);
+    margin: 0;
+  }
+
+  .hours > div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    padding-block-end: var(--sp-3);
+    border-block-end: 1px dashed var(--color-border);
+  }
+
+  .hours > div:last-child {
+    padding-block-end: 0;
+    border-block-end: 0;
+  }
+
+  .hours dt {
+    color: var(--color-text);
+    font-weight: var(--fw-medium);
+  }
+
+  .hours dd {
+    margin: 0;
+    color: var(--color-text-strong);
+    font-weight: var(--fw-semibold);
+    font-variant-numeric: lining-nums tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Выходной приглушён, чтобы не спорил с рабочими часами */
+  .hours dd[data-off] {
+    color: var(--color-text-muted);
+    font-weight: var(--fw-regular);
+  }
+
+  .req {
+    display: grid;
+    gap: var(--sp-3);
+    margin: 0;
+    font-size: var(--fs-300);
+  }
+
+  .req > div {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: var(--sp-3);
+  }
+
+  @media (max-width: 26rem) {
+    .req > div {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+    }
+  }
+
+  .req dt {
+    color: var(--color-text-muted);
+  }
+
+  .req dd {
+    margin: 0;
+    color: var(--color-text);
+    overflow-wrap: break-word;
+  }
+
+  /* ========================================================================
+     Появление блоков при прокрутке — дополнение, не обязательное условие.
+     ====================================================================== */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .site,
+      .contact,
+      .info-card {
+        animation: block-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 16%;
+      }
+    }
+  }
+
+  @keyframes block-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* ==========================================================================
+   Страница отзывов: сводка рейтинга, темы, широкие цитаты
+   ========================================================================== */
+@layer components {
+  /* Крупная оценка слева, факты справа */
+  .rating-bar {
+    display: grid;
+    gap: var(--sp-6);
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-4);
+  }
+
+  @media (min-width: 44rem) {
+    .rating-bar {
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: var(--sp-10);
+    }
+  }
+
+  .rating-bar__score {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding-inline-end: var(--sp-6);
+  }
+
+  @media (min-width: 44rem) {
+    .rating-bar__score {
+      border-inline-end: var(--border-1);
+    }
+  }
+
+  .rating-bar__num {
+    color: var(--color-text-strong);
+    font-size: clamp(2.75rem, 2.2rem + 2.4vw, 4rem);
+    font-weight: var(--fw-bold);
+    line-height: 1;
+    letter-spacing: var(--ls-tight);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .rating-bar__stars {
+    /* См. .hero-card__stars: нужен затемнённый оттенок. */
+    color: var(--amber-700);
+    font-size: var(--fs-500);
+    letter-spacing: 0.1em;
+  }
+
+  .rating-bar__src {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+  }
+
+  .rating-bar__facts {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin: 0;
+  }
+
+  @media (min-width: 44rem) {
+    .rating-bar__facts {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .rating-bar__facts dt {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+  }
+
+  .rating-bar__facts dd {
+    margin: 0;
+    margin-block-start: 2px;
+    color: var(--color-text-strong);
+    font-size: var(--fs-600);
+    font-weight: var(--fw-bold);
+    font-variant-numeric: lining-nums tabular-nums;
+    letter-spacing: var(--ls-num);
+  }
+
+  /* --- темы: за что хвалят ---------------------------------------------- */
+  .themes {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+    counter-reset: theme;
+  }
+
+  @media (min-width: 52rem) {
+    .themes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .theme {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding-block-start: var(--sp-5);
+    /* Верхняя линейка вместо рамки */
+    border-block-start: 2px solid var(--color-accent);
+  }
+
+  .theme__num {
+    /* См. .dir__num: faint не проходит по контрасту на мелком кегле. */
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-caps);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .theme__title {
+    margin: 0;
+    font-size: var(--fs-600);
+    line-height: var(--lh-snug);
+    color: var(--color-text-strong);
+  }
+
+  .theme__text {
+    color: var(--color-text-muted);
+    font-size: var(--fs-400);
+    line-height: var(--lh-base);
+  }
+
+  /* --- широкая раскладка цитат ----------------------------------------- */
+  @media (min-width: 56rem) {
+    .quotes--wide {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 76rem) {
+    .quotes--wide {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .quote__link {
+    color: var(--color-link);
+    font-size: var(--fs-300);
+    
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap);
+    margin-inline-start: auto;
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .theme,
+      .rating-bar {
+        animation: block-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 16%;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Навигатор по симптомам
+   Клиент знает не название услуги, а что «стучит» или «дымит».
+   Эти ссылки ведут от симптома к нужной странице.
+   ========================================================================== */
+@layer components {
+  .finder__hint {
+    margin-block-end: var(--sp-4);
+    color: var(--color-text-strong);
+    font-size: var(--fs-500);
+    font-weight: var(--fw-semibold);
+  }
+
+  .finder {
+    display: grid;
+    gap: var(--sp-3);
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .finder {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 62rem) {
+    .finder {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .finder a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    block-size: 100%;
+    min-height: var(--tap);
+    padding: var(--sp-4);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-3);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease-out),
+      background-color var(--dur-fast) var(--ease-out),
+      transform var(--dur-fast) var(--ease-out);
+  }
+
+  .finder b {
+    color: var(--color-text-strong);
+    font-size: var(--fs-400);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+  }
+
+  .finder span {
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-snug);
+  }
+
+  .finder a:hover {
+    background-color: var(--color-surface-accent);
+    border-color: var(--color-accent);
+  }
+
+  .finder a:hover b {
+    color: var(--color-accent-text);
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .finder a:hover {
+      transform: translateY(-2px);
+    }
+  }
+
+  /* ==========================================================================
+     Прайс: чуть спокойнее и компактнее на мобильном
+     ========================================================================== */
+  /* Не должно выглядеть как ещё одна секция */
+  .price-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-5);
+    margin-block-end: var(--sp-6);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+  }
+
+  .price-legend > span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+
+  .price-legend b {
+    color: var(--color-text-strong);
+    font-weight: var(--fw-semibold);
+  }
+
+  /* Липнет при прокрутке длинного списка */
+  @media (min-width: 48rem) {
+    .prices__group-title {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + 5.5rem);
+      z-index: 1;
+      background-color: var(--color-bg);
+      padding-block: var(--sp-2);
+    }
+  }
+}
+
+/* ==========================================================================
+   Прайс: категории свёрнуты в <details>
+   До нужной позиции доходишь за пару касаний, а не листаешь весь список.
+   ========================================================================== */
+@layer components {
+  .prices__group {
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    border-radius: var(--radius-3);
+    overflow: hidden;
+  }
+
+  .prices__group + .prices__group {
+    margin-block-start: var(--sp-3);
+  }
+
+  /* Заголовок группы — интерактивный summary */
+  .prices__group-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    min-height: var(--tap);
+    margin: 0;
+    padding: var(--sp-4) var(--sp-5);
+    border-block-end: 0;
+    background-color: var(--color-surface);
+    color: var(--color-text-strong);
+    font-size: var(--fs-500);
+    font-weight: var(--fw-semibold);
+    line-height: var(--lh-snug);
+    cursor: pointer;
+    list-style: none;
+    /* Липкий заголовок отключаем: внутри details он мешал бы раскрытию. */
+    position: static;
+  }
+
+  .prices__group-title::-webkit-details-marker {
+    display: none;
+  }
+
+  .prices__group-title::marker {
+    content: "";
+  }
+
+  .prices__group-title:hover {
+    background-color: var(--color-surface-2);
+  }
+
+  /* Сразу видно, велик ли раздел */
+  .prices__group-count {
+    margin-inline-start: auto;
+    padding: 2px var(--sp-2);
+    background-color: var(--color-surface-2);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-medium);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  /* Свой шеврон вместо системного маркера */
+  .prices__group-title::after {
+    content: "";
+    flex: none;
+    inline-size: 0.55rem;
+    block-size: 0.55rem;
+    border-right: 2px solid var(--color-accent);
+    border-bottom: 2px solid var(--color-accent);
+    rotate: 45deg;
+    transition: rotate var(--dur-fast) var(--ease-out);
+  }
+
+  .prices__group[open] > .prices__group-title {
+    border-block-end: var(--border-1);
+    background-color: var(--color-surface-2);
+  }
+
+  .prices__group[open] > .prices__group-title::after {
+    rotate: -135deg;
+  }
+
+  .prices__group .prices__table {
+    padding-inline: var(--sp-2);
+  }
+
+  @media (max-width: 39.99rem) {
+    .prices__group-title {
+      padding-inline: var(--sp-4);
+      font-size: var(--fs-400);
+    }
+  }
+}
+
+/* ==========================================================================
+   Гарантия: сводка сроков в начале страницы
+   Главный вопрос читателя — «на сколько», поэтому сроки видны сразу,
+   до подробной таблицы.
+   ========================================================================== */
+@layer components {
+  .warranty-cards {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 52rem) {
+    .warranty-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .wcard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-6);
+    background-color: var(--color-surface);
+    border: var(--border-1);
+    /* Кромка слева вместо полной рамки */
+    border-inline-start: 3px solid var(--color-accent);
+    border-radius: var(--radius-3);
+  }
+
+  .wcard__term {
+    color: var(--color-text-strong);
+    font-size: clamp(1.5rem, 1.25rem + 1.1vw, 2rem);
+    font-weight: var(--fw-bold);
+    line-height: 1.1;
+    letter-spacing: var(--ls-tight);
+    font-variant-numeric: lining-nums tabular-nums;
+  }
+
+  .wcard__what {
+    color: var(--color-accent-text);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+  }
+
+  .wcard__list {
+    margin-block-start: var(--sp-3);
+    padding-block-start: var(--sp-3);
+    border-block-start: var(--border-1);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-base);
+  }
+
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .wcard {
+        animation: block-rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 16%;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   Марки автомобилей
+   Марки идут строками, сгруппированными по смыслу: тридцать отдельных
+   чипов занимали втрое больше места.
+   ========================================================================== */
+@layer components {
+  .brands {
+    display: grid;
+    gap: var(--sp-5);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 56rem) {
+    .brands {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--sp-6);
+    }
+  }
+
+  .brands__group {
+    padding-block-start: var(--sp-4);
+    border-block-start: 2px solid var(--color-structure-soft);
+  }
+
+  .brands__label {
+    margin-block-end: var(--sp-2);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+  }
+
+  
+  .brands__list {
+    color: var(--color-text);
+    font-size: var(--fs-400);
+    line-height: var(--lh-loose);
+  }
+
+  .brands__note {
+    max-inline-size: var(--measure);
+    margin-block-start: var(--sp-6);
+    color: var(--color-text-muted);
+    font-size: var(--fs-300);
+    line-height: var(--lh-base);
+  }
+
+  /* ==========================================================================
+     Виджет отзывов Яндекса
+     Вёрстка виджета не растягивается на произвольную ширину, поэтому
+     контейнер ограничен и центрирован.
+     ========================================================================== */
+  .reviews-widget {
+    max-inline-size: 46rem;
+    margin-inline: auto;
+  }
+
+  @media (min-width: 48rem) {
+    .reviews-widget {
+      /* Книжная пропорция: при 16/11 виджет пустует снизу */
+      aspect-ratio: 4 / 3;
+      min-block-size: 32rem;
+    }
+  }
+}

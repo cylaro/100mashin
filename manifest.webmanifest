@@ -1,0 +1,26 @@
+{
+  "name": "Автосервис «100 Машин», Воронеж",
+  "short_name": "100 Машин",
+  "description": "Ремонт двигателей, ГБЦ, турбин, ходовой и кузова в Воронеже. Нормочас 1200 ₽ на все марки.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#14181c",
+  "background_color": "#fbfaf8",
+  "icons": [
+    {
+      "src": "/assets/img/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/img/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
