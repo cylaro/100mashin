@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/components/hero.css">
   <link rel="stylesheet" href="/assets/css/components/blocks.css">
+  <link rel="stylesheet" href="/assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Что такое нормочас и почему цена считается через него?","acceptedAnswer":{"@type":"Answer","text":"Нормочас — это стоимость одного часа работы механика. У каждой операции есть трудоёмкость в часах, взятая из нормативов: например, замена колодок на одной оси — 0,5 нормочаса. Стоимость работы = нормочас × трудоёмкость. Пример: замена колодок = 1200 ₽ × 0,5 = 600 ₽ плюс сами колодки. Такой расчёт можно проверить, поэтому мы и называем цену до начала ремонта, а не после."}},{"@type":"Question","name":"Почему у вас одна ставка для отечественных и иномарок?","acceptedAnswer":{"@type":"Answer","text":"Потому что трудоёмкость и так учитывает сложность: на иномарке та же операция часто занимает больше нормочасов, и цена растёт естественным образом. Вводить ещё и повышенную ставку — это двойной счёт. В Воронеже ставка для иномарок в независимых сервисах обычно 1250–1350 ₽, у специализированных и дилерских — 2100–2700 ₽. У нас 1200 ₽ для всех."}},{"@type":"Question","name":"Что означает пометка «оценка» в прайсе?","acceptedAnswer":{"@type":"Answer","text":"Что цена рассчитана по нормочасу и нормативной трудоёмкости, а не взята из подтверждённого прайса на конкретную операцию. Мы могли бы не помечать такие позиции, но тогда вы не отличали бы точную цену от расчётной. Итоговая сумма по таким работам фиксируется в заказ-наряде после осмотра."}},{"@type":"Question","name":"Цены включают запчасти?","acceptedAnswer":{"@type":"Answer","text":"Нет. Все цены в прайсе — только за работу. Запчасти и расходные материалы считаются отдельно, потому что зависят от автомобиля и от вашего выбора между оригиналом и аналогом. Мы всегда предлагаем оба варианта с ценами и сроками."}},{"@type":"Question","name":"Отличается ли цена при оплате картой или по счёту?","acceptedAnswer":{"@type":"Answer","text":"Нет, цена одна. Некоторые сервисы в Воронеже поднимают ставку при безналичной оплате — у нас наличные, карта, СБП и безналичный расчёт по одной цене. Для организаций выдаём документы с НДС."}},{"@type":"Question","name":"Может ли итоговая сумма оказаться больше?","acceptedAnswer":{"@type":"Answer","text":"Только если вы сами согласуете дополнительные работы. Порядок такой: диагностика, затем заказ-наряд с перечнем работ и итоговой суммой, затем ваше согласие. Если по ходу нашли ещё поломку — звоним, показываем фото и согласовываем отдельно. Работы без согласования вы не оплачиваете."}},{"@type":"Question","name":"Прайс актуальный?","acceptedAnswer":{"@type":"Answer","text":"Прайс поддерживаем в актуальном состоянии, но цены на запчасти меняются у поставщиков. Итоговую сумму всегда называем при согласовании заказ-наряда — она и является окончательной."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"Цены"}]}</script>
@@ -102,12 +103,23 @@
       <nav class="nav" data-nav aria-label="Основная навигация">
         <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false"
                 aria-controls="nav-panel">
-          <span class="nav__toggle-icon" aria-hidden="true"><span></span></span>
-          <span class="visually-hidden">Открыть меню</span>
-          <span aria-hidden="true">Меню</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+          <span class="nav__toggle-text" aria-hidden="true">Меню</span>
+          <span class="visually-hidden">Открыть меню сайта</span>
         </button>
 
         <div class="nav__panel" id="nav-panel" data-nav-panel>
+          <div class="nav__panel-head">
+            <p class="nav__panel-title">Меню</p>
+            <button class="nav__close" type="button" data-nav-close>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round"/>
+              </svg>
+              <span class="visually-hidden">Закрыть меню</span>
+            </button>
+          </div>
+
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
               <a class="nav__link dropdown__toggle" href="/uslugi/">
@@ -117,7 +129,15 @@
                         stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <ul class="dropdown__menu" role="list">
+              <button class="dropdown__expand" type="button" data-submenu-toggle
+                      aria-expanded="false" aria-controls="nav-services">
+                <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5 7 9.5l4-4" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="visually-hidden">Показать все услуги</span>
+              </button>
+              <ul class="dropdown__menu" id="nav-services" role="list">
                 <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
@@ -144,10 +164,14 @@
             <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
           </ul>
 
+          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+            Записаться на ремонт
+          </a>
+
           <div class="nav__panel-contacts">
             <a href="tel:+79204480004"><strong>+7 (920) 448-00-04</strong> — запись на ремонт</a>
             <a href="tel:+79204460003"><strong>+7 (920) 446-00-03</strong> — подбор запчастей</a>
-            <span>Пн–Сб 9:00–19:00</span>
+            <span>Пн–Сб 9:00–19:00 · Вс выходной</span>
           </div>
         </div>
       </nav>
@@ -717,6 +741,13 @@
       </svg>
       Маршрут
     </a>
+    <button class="sticky-bar__menu" type="button" data-nav-open>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Меню
+    </button>
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>

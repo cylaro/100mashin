@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/components/hero.css">
   <link rel="stylesheet" href="/assets/css/components/blocks.css">
+  <link rel="stylesheet" href="/assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://100mashin.ru/gruzovoy-servis/#service","name":"Ремонт грузового и коммерческого транспорта","description":"Ремонт ГАЗелей, лёгкого коммерческого и грузового транспорта в Воронеже: двигатели, КПП, редукторы, турбины, кузовной ремонт, шиномонтаж.","serviceType":"Ремонт грузовых автомобилей","url":"https://100mashin.ru/gruzovoy-servis/","provider":{"@id":"https://100mashin.ru/#organization"},"areaServed":{"@type":"City","name":"Воронеж"},"offers":{"@type":"Offer","price":"1200","priceCurrency":"RUB","availability":"https://schema.org/InStock","url":"https://100mashin.ru/gruzovoy-servis/","seller":{"@id":"https://100mashin.ru/#organization"}}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Какие грузовые обслуживаете?","acceptedAnswer":{"@type":"Answer","text":"Основной профиль — ГАЗель, ГАЗ и лёгкий коммерческий транспорт: по ним у нас свой склад запчастей и наибольший опыт. Также работаем с грузовыми и коммерческими автомобилями других марок, включая Isuzu, Ford Transit, микроавтобусы. По конкретной модели скажем честно, берёмся или нет: +7 (920) 448-00-04 ."}},{"@type":"Question","name":"Как быстро возьмёте машину в работу при простое?","acceptedAnswer":{"@type":"Answer","text":"Для перевозчиков простой стоит дороже ремонта, поэтому такие машины берём вне очереди, насколько позволяет загрузка. По отзыву постоянного клиента, ремонт, который в других сервисах занимал две-три недели, у нас уложился в четыре дня — в основном потому, что запчасти на ГАЗ есть в наличии."}},{"@type":"Question","name":"Есть ли у вас запчасти на ГАЗ в наличии?","acceptedAnswer":{"@type":"Answer","text":"Да, у нас свой магазин запчастей на площадке на Димитрова. Держим ходовые позиции по ГАЗели: синхронизаторы, вторичные валы, ремкомплекты подшипников КПП, распредвалы, шатуны, колодки, фильтры. Остальное привозим под заказ, в том числе на спецтехнику. Подбор: +7 (920) 446-00-03 ."}},{"@type":"Question","name":"Делаете предрейсовый техосмотр?","acceptedAnswer":{"@type":"Answer","text":"Да, от 500 ₽. Работаем по договору с организациями, выдаём документы. Это востребовано у перевозчиков, обязанных проводить предрейсовый контроль технического состояния."}},{"@type":"Question","name":"Работаете с рефрижераторами?","acceptedAnswer":{"@type":"Answer","text":"Да, обслуживаем и ремонтируем холодильное оборудование коммерческого транспорта. Актуально для перевозок продуктов и медикаментов, где сбой холодильника означает потерю груза."}},{"@type":"Question","name":"Можно ли обслуживать парк по договору?","acceptedAnswer":{"@type":"Answer","text":"Да. Заключаем договор, ведём плановое ТО по графику, работаем по безналичному расчёту и выдаём полный комплект документов с НДС. ООО «СТО МАШИН» на общей системе налогообложения. Условия для юридических лиц"}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"Грузовой сервис"}]}</script>
@@ -102,12 +103,23 @@
       <nav class="nav" data-nav aria-label="Основная навигация">
         <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false"
                 aria-controls="nav-panel">
-          <span class="nav__toggle-icon" aria-hidden="true"><span></span></span>
-          <span class="visually-hidden">Открыть меню</span>
-          <span aria-hidden="true">Меню</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+          <span class="nav__toggle-text" aria-hidden="true">Меню</span>
+          <span class="visually-hidden">Открыть меню сайта</span>
         </button>
 
         <div class="nav__panel" id="nav-panel" data-nav-panel>
+          <div class="nav__panel-head">
+            <p class="nav__panel-title">Меню</p>
+            <button class="nav__close" type="button" data-nav-close>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round"/>
+              </svg>
+              <span class="visually-hidden">Закрыть меню</span>
+            </button>
+          </div>
+
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
               <a class="nav__link dropdown__toggle" href="/uslugi/">
@@ -117,7 +129,15 @@
                         stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <ul class="dropdown__menu" role="list">
+              <button class="dropdown__expand" type="button" data-submenu-toggle
+                      aria-expanded="false" aria-controls="nav-services">
+                <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5 7 9.5l4-4" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="visually-hidden">Показать все услуги</span>
+              </button>
+              <ul class="dropdown__menu" id="nav-services" role="list">
                 <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
@@ -144,10 +164,14 @@
             <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
           </ul>
 
+          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+            Записаться на ремонт
+          </a>
+
           <div class="nav__panel-contacts">
             <a href="tel:+79204480004"><strong>+7 (920) 448-00-04</strong> — запись на ремонт</a>
             <a href="tel:+79204460003"><strong>+7 (920) 446-00-03</strong> — подбор запчастей</a>
-            <span>Пн–Сб 9:00–19:00</span>
+            <span>Пн–Сб 9:00–19:00 · Вс выходной</span>
           </div>
         </div>
       </nav>
@@ -746,6 +770,13 @@
       </svg>
       Маршрут
     </a>
+    <button class="sticky-bar__menu" type="button" data-nav-open>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Меню
+    </button>
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>

@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/components/hero.css">
   <link rel="stylesheet" href="/assets/css/components/blocks.css">
+  <link rel="stylesheet" href="/assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://100mashin.ru/uslugi/zamena-grm/#service","name":"Замена ремня и цепи ГРМ в Воронеже","description":"Замена ремня ГРМ в Воронеже от 3 000 ₽, цепи ГРМ от 4 500 ₽. Меняем комплектом с роликами и помпой, выставляем метки по заводским рискам. Гарантия на работы.","serviceType":"Замена ремня ГРМ","url":"https://100mashin.ru/uslugi/zamena-grm/","provider":{"@id":"https://100mashin.ru/#organization"},"areaServed":{"@type":"City","name":"Воронеж"},"offers":{"@type":"Offer","price":"3000","priceCurrency":"RUB","availability":"https://schema.org/InStock","url":"https://100mashin.ru/uslugi/zamena-grm/","seller":{"@id":"https://100mashin.ru/#organization"}}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Через сколько менять ремень ГРМ?","acceptedAnswer":{"@type":"Answer","text":"Смотрите регламент своей машины: обычно это 60–120 тыс. км или 5–6 лет, что наступит раньше. Резина стареет и без пробега, поэтому срок в годах важен не меньше пробега. Если машина куплена недавно и история замен неизвестна — надёжнее заменить."}},{"@type":"Question","name":"Что будет, если ремень порвётся?","acceptedAnswer":{"@type":"Answer","text":"На большинстве современных двигателей клапаны встретятся с поршнями: гнутся клапаны, повреждаются поршни и направляющие, иногда достаётся и головке. Ремонт после обрыва — это уже ремонт ГБЦ и суммы в десятки раз больше стоимости профилактической замены."}},{"@type":"Question","name":"Нужно ли менять помпу вместе с ремнём?","acceptedAnswer":{"@type":"Answer","text":"Если помпа приводится ремнём ГРМ — да, настоятельно рекомендуем. Заклинивший подшипник помпы рвёт ремень с теми же последствиями. К тому же вся разборка уже сделана, и замена помпы обходится в стоимость самой детали плюс небольшая доплата за работу."}},{"@type":"Question","name":"Можно поставить только ремень, без роликов?","acceptedAnswer":{"@type":"Answer","text":"Технически можно, и мы сделаем, если вы настаиваете. Но предупредим письменно: гарантию на такую работу мы ограничиваем, потому что за ресурс старых роликов отвечать не можем. В нашей практике именно ролик — самая частая причина обрыва."}},{"@type":"Question","name":"Сколько занимает замена?","acceptedAnswer":{"@type":"Answer","text":"От нескольких часов до дня — зависит от двигателя. На простых 8-клапанных моторах это полдня, на поперечно расположенных V-образных двигателях с тесным подкапотным пространством может занять полный день."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"Услуги","item":"https://100mashin.ru/uslugi/"},{"@type":"ListItem","position":3,"name":"Замена ГРМ"}]}</script>
@@ -102,12 +103,23 @@
       <nav class="nav" data-nav aria-label="Основная навигация">
         <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false"
                 aria-controls="nav-panel">
-          <span class="nav__toggle-icon" aria-hidden="true"><span></span></span>
-          <span class="visually-hidden">Открыть меню</span>
-          <span aria-hidden="true">Меню</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+          <span class="nav__toggle-text" aria-hidden="true">Меню</span>
+          <span class="visually-hidden">Открыть меню сайта</span>
         </button>
 
         <div class="nav__panel" id="nav-panel" data-nav-panel>
+          <div class="nav__panel-head">
+            <p class="nav__panel-title">Меню</p>
+            <button class="nav__close" type="button" data-nav-close>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round"/>
+              </svg>
+              <span class="visually-hidden">Закрыть меню</span>
+            </button>
+          </div>
+
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
               <a class="nav__link dropdown__toggle" href="/uslugi/">
@@ -117,7 +129,15 @@
                         stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <ul class="dropdown__menu" role="list">
+              <button class="dropdown__expand" type="button" data-submenu-toggle
+                      aria-expanded="false" aria-controls="nav-services">
+                <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5 7 9.5l4-4" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="visually-hidden">Показать все услуги</span>
+              </button>
+              <ul class="dropdown__menu" id="nav-services" role="list">
                 <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
@@ -144,10 +164,14 @@
             <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
           </ul>
 
+          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+            Записаться на ремонт
+          </a>
+
           <div class="nav__panel-contacts">
             <a href="tel:+79204480004"><strong>+7 (920) 448-00-04</strong> — запись на ремонт</a>
             <a href="tel:+79204460003"><strong>+7 (920) 446-00-03</strong> — подбор запчастей</a>
-            <span>Пн–Сб 9:00–19:00</span>
+            <span>Пн–Сб 9:00–19:00 · Вс выходной</span>
           </div>
         </div>
       </nav>
@@ -670,6 +694,13 @@
       </svg>
       Маршрут
     </a>
+    <button class="sticky-bar__menu" type="button" data-nav-open>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Меню
+    </button>
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>

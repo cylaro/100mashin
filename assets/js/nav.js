@@ -48,6 +48,36 @@ export function markCurrent(nav) {
   }
 }
 
+/**
+ * Аккордеон раздела «Услуги» в мобильном меню.
+ *
+ * Пятнадцать подпунктов, показанные сразу, растягивают панель на полтора
+ * экрана и мешают добраться до остальных разделов. Поэтому список свёрнут,
+ * а раскрывается по кнопке. На широком экране кнопка скрыта, и работает
+ * прежнее раскрытие по наведению.
+ */
+function initSubmenu(nav, isDesktop) {
+  const btn = nav.querySelector('[data-submenu-toggle]');
+  const menu = btn && nav.querySelector(`#${btn.getAttribute('aria-controls')}`);
+  if (!btn || !menu) return;
+
+  const setState = (expanded) => {
+    btn.setAttribute('aria-expanded', String(expanded));
+    menu.classList.toggle('is-open', expanded);
+  };
+
+  // Если открыта страница услуги, раздел раскрыт сразу: пользователь
+  // видит, где он находится, и может перейти к соседней услуге.
+  const onServicePage = !!menu.querySelector('[aria-current="page"]');
+  setState(onServicePage);
+
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (isDesktop()) return;
+    setState(btn.getAttribute('aria-expanded') !== 'true');
+  });
+}
+
 export function initNav(root = document) {
   const nav = root.querySelector('[data-nav]');
   if (!nav) return;
@@ -120,6 +150,23 @@ export function initNav(root = document) {
     isOpen() ? close() : open();
   });
 
+  // Крестик в шапке панели.
+  panel.querySelector('[data-nav-close]')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    close();
+  });
+
+  // Вход в меню из нижней панели: до неё палец достаёт легче всего.
+  for (const opener of root.querySelectorAll('[data-nav-open]')) {
+    opener.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (isDesktop()) return;
+      isOpen() ? close({ restoreFocus: false }) : open();
+    });
+  }
+
+  initSubmenu(nav, isDesktop);
+
   // Escape закрывает, Tab держится внутри панели (осознанная ловушка фокуса).
   document.addEventListener('keydown', (e) => {
     if (isDesktop() || !isOpen()) return;
@@ -150,12 +197,14 @@ export function initNav(root = document) {
     }
   });
 
-  // Клик вне меню.
+  // Клик вне меню. Кнопки-открыватели исключаем: их клик всплывает сюда
+  // сразу после открытия и иначе закрыл бы панель тем же нажатием.
   document.addEventListener('click', (e) => {
     if (isDesktop() || !isOpen()) return;
     const t = e.target;
     if (!(t instanceof Node)) return;
     if (panel.contains(t) || toggle.contains(t)) return;
+    if (t instanceof Element && t.closest('[data-nav-open]')) return;
     close({ restoreFocus: false });
   });
 

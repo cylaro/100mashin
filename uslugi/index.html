@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/components/hero.css">
   <link rel="stylesheet" href="/assets/css/components/blocks.css">
+  <link rel="stylesheet" href="/assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","@id":"https://100mashin.ru/uslugi/#page","name":"Услуги автосервиса «100 Машин»","isPartOf":{"@id":"https://100mashin.ru/#website"},"about":{"@id":"https://100mashin.ru/#organization"},"hasPart":[{"@type":"Service","name":"Ремонт двигателя","url":"https://100mashin.ru/uslugi/remont-dvigatelya/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Ремонт ГБЦ","url":"https://100mashin.ru/uslugi/remont-gbc/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Ремонт турбин","url":"https://100mashin.ru/uslugi/remont-turbin/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Замена ГРМ","url":"https://100mashin.ru/uslugi/zamena-grm/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Ремонт форсунок","url":"https://100mashin.ru/uslugi/remont-forsunok/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Удаление катализатора","url":"https://100mashin.ru/uslugi/udalenie-katalizatora/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"КПП и сцепление","url":"https://100mashin.ru/uslugi/transmissiya/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Ходовая и тормоза","url":"https://100mashin.ru/uslugi/hodovaya-tormoza/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Компьютерная диагностика","url":"https://100mashin.ru/uslugi/diagnostika/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Автоэлектрика","url":"https://100mashin.ru/uslugi/elektrika/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Техобслуживание","url":"https://100mashin.ru/uslugi/to/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Кондиционер","url":"https://100mashin.ru/uslugi/konditsioner/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Кузовной ремонт","url":"https://100mashin.ru/uslugi/kuzovnoy-remont/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Автостёкла","url":"https://100mashin.ru/uslugi/avtostekla/","provider":{"@id":"https://100mashin.ru/#organization"}},{"@type":"Service","name":"Шиномонтаж","url":"https://100mashin.ru/uslugi/shinomontazh/","provider":{"@id":"https://100mashin.ru/#organization"}}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"С какими марками работаете?","acceptedAnswer":{"@type":"Answer","text":"С легковыми отечественными и импортными, с лёгким коммерческим и грузовым транспортом. Отдельная специализация — ГАЗели и ГАЗ: по ним у нас свой склад запчастей. Работаем с ВАЗ, УАЗ, Kia, Hyundai, Renault, Volkswagen, Ford, Toyota, Nissan, Chevrolet, Mazda, Skoda, Mercedes-Benz, BMW, Audi, Peugeot, Citroen и другими."}},{"@type":"Question","name":"Чем отличаются две ваши площадки?","acceptedAnswer":{"@type":"Answer","text":"Это одна компания. На Димитрова, 138 — основная площадка с магазином запчастей и грузовым сервисом. На проспекте Труда, 46И — площадка для легкового ремонта, удобная тем, кто живёт в северной части города. Часть работ, например станочные операции по ГБЦ, выполняется на оснащённой площадке — при записи скажем, куда приезжать."}},{"@type":"Question","name":"Как узнать цену до приезда?","acceptedAnswer":{"@type":"Answer","text":"Три способа. Посмотреть прайс — там 158 позиций с ценами. Посчитать на калькуляторе на той же странице. Или описать проблему в WhatsApp — ответим с вилкой цены и сроком."}},{"@type":"Question","name":"Работаете с организациями?","acceptedAnswer":{"@type":"Answer","text":"Да, ООО «СТО МАШИН» работает на общей системе налогообложения: выдаём счёт, акт и счёт-фактуру с НДС. Обслуживаем автопарки по договору, есть опыт исполнения госконтрактов. Условия для юридических лиц"}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"Услуги"}]}</script>
@@ -102,12 +103,23 @@
       <nav class="nav" data-nav aria-label="Основная навигация">
         <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false"
                 aria-controls="nav-panel">
-          <span class="nav__toggle-icon" aria-hidden="true"><span></span></span>
-          <span class="visually-hidden">Открыть меню</span>
-          <span aria-hidden="true">Меню</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+          <span class="nav__toggle-text" aria-hidden="true">Меню</span>
+          <span class="visually-hidden">Открыть меню сайта</span>
         </button>
 
         <div class="nav__panel" id="nav-panel" data-nav-panel>
+          <div class="nav__panel-head">
+            <p class="nav__panel-title">Меню</p>
+            <button class="nav__close" type="button" data-nav-close>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round"/>
+              </svg>
+              <span class="visually-hidden">Закрыть меню</span>
+            </button>
+          </div>
+
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
               <a class="nav__link dropdown__toggle" href="/uslugi/" aria-current="page">
@@ -117,7 +129,15 @@
                         stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <ul class="dropdown__menu" role="list">
+              <button class="dropdown__expand" type="button" data-submenu-toggle
+                      aria-expanded="false" aria-controls="nav-services">
+                <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5 7 9.5l4-4" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="visually-hidden">Показать все услуги</span>
+              </button>
+              <ul class="dropdown__menu" id="nav-services" role="list">
                 <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
@@ -144,10 +164,14 @@
             <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
           </ul>
 
+          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+            Записаться на ремонт
+          </a>
+
           <div class="nav__panel-contacts">
             <a href="tel:+79204480004"><strong>+7 (920) 448-00-04</strong> — запись на ремонт</a>
             <a href="tel:+79204460003"><strong>+7 (920) 446-00-03</strong> — подбор запчастей</a>
-            <span>Пн–Сб 9:00–19:00</span>
+            <span>Пн–Сб 9:00–19:00 · Вс выходной</span>
           </div>
         </div>
       </nav>
@@ -723,6 +747,13 @@
       </svg>
       Маршрут
     </a>
+    <button class="sticky-bar__menu" type="button" data-nav-open>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Меню
+    </button>
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>

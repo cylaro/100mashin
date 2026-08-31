@@ -49,6 +49,7 @@
   <link rel="stylesheet" href="/assets/css/styles.css">
   <link rel="stylesheet" href="/assets/css/components/hero.css">
   <link rel="stylesheet" href="/assets/css/components/blocks.css">
+  <link rel="stylesheet" href="/assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Service","@id":"https://100mashin.ru/uslugi/shinomontazh/#service","name":"Шиномонтаж в Воронеже","description":"Шиномонтаж в Воронеже: R13 — 2 000 ₽, R14 — 2 100 ₽, R15 — 2 400 ₽, R16 — 2 600 ₽, R17–R18 — 3 400 ₽, ГАЗель — 5 200 ₽ за 4 колеса. Балансировка, вулканизация.","serviceType":"Шиномонтаж и балансировка","url":"https://100mashin.ru/uslugi/shinomontazh/","provider":{"@id":"https://100mashin.ru/#organization"},"areaServed":{"@type":"City","name":"Воронеж"},"offers":{"@type":"Offer","price":"2000","priceCurrency":"RUB","availability":"https://schema.org/InStock","url":"https://100mashin.ru/uslugi/shinomontazh/","seller":{"@id":"https://100mashin.ru/#organization"}}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Что входит в цену за 4 колеса?","acceptedAnswer":{"@type":"Answer","text":"Полный комплекс: снятие колёс с автомобиля, разбортовка, монтаж, балансировка каждого колеса и установка обратно с протяжкой. Никаких доплат «за балансировку отдельно» — это уже включено."}},{"@type":"Question","name":"Нужна ли запись?","acceptedAnswer":{"@type":"Answer","text":"В сезон — очень желательна, иначе придётся ждать. Осенью и весной поток большой. Позвоните +7 (920) 448-00-04 или напишите в WhatsApp, подберём удобное время."}},{"@type":"Question","name":"Можно ли отремонтировать боковой порез?","acceptedAnswer":{"@type":"Answer","text":"Иногда да, но с оговорками. Боковина работает на изгиб, и ремонт там менее надёжен, чем в протекторной части. Мы посмотрим и скажем честно: держать будет или колесо под замену. Отправлять вас на трассу с сомнительным ремонтом не станем."}},{"@type":"Question","name":"Делаете грузовой шиномонтаж?","acceptedAnswer":{"@type":"Answer","text":"Да, от 1 500 ₽ за колесо. Работаем с ГАЗелями, грузовыми и коммерческим транспортом, в том числе по договору с организациями. Грузовой сервис"}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"Услуги","item":"https://100mashin.ru/uslugi/"},{"@type":"ListItem","position":3,"name":"Шиномонтаж"}]}</script>
@@ -102,12 +103,23 @@
       <nav class="nav" data-nav aria-label="Основная навигация">
         <button class="nav__toggle" type="button" data-nav-toggle aria-expanded="false"
                 aria-controls="nav-panel">
-          <span class="nav__toggle-icon" aria-hidden="true"><span></span></span>
-          <span class="visually-hidden">Открыть меню</span>
-          <span aria-hidden="true">Меню</span>
+          <span class="nav__burger" aria-hidden="true"></span>
+          <span class="nav__toggle-text" aria-hidden="true">Меню</span>
+          <span class="visually-hidden">Открыть меню сайта</span>
         </button>
 
         <div class="nav__panel" id="nav-panel" data-nav-panel>
+          <div class="nav__panel-head">
+            <p class="nav__panel-title">Меню</p>
+            <button class="nav__close" type="button" data-nav-close>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2"
+                      stroke-linecap="round"/>
+              </svg>
+              <span class="visually-hidden">Закрыть меню</span>
+            </button>
+          </div>
+
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
               <a class="nav__link dropdown__toggle" href="/uslugi/">
@@ -117,7 +129,15 @@
                         stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               </a>
-              <ul class="dropdown__menu" role="list">
+              <button class="dropdown__expand" type="button" data-submenu-toggle
+                      aria-expanded="false" aria-controls="nav-services">
+                <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M3 5.5 7 9.5l4-4" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="visually-hidden">Показать все услуги</span>
+              </button>
+              <ul class="dropdown__menu" id="nav-services" role="list">
                 <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
                 <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
@@ -144,10 +164,14 @@
             <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
           </ul>
 
+          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+            Записаться на ремонт
+          </a>
+
           <div class="nav__panel-contacts">
             <a href="tel:+79204480004"><strong>+7 (920) 448-00-04</strong> — запись на ремонт</a>
             <a href="tel:+79204460003"><strong>+7 (920) 446-00-03</strong> — подбор запчастей</a>
-            <span>Пн–Сб 9:00–19:00</span>
+            <span>Пн–Сб 9:00–19:00 · Вс выходной</span>
           </div>
         </div>
       </nav>
@@ -680,6 +704,13 @@
       </svg>
       Маршрут
     </a>
+    <button class="sticky-bar__menu" type="button" data-nav-open>
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round"/>
+      </svg>
+      Меню
+    </button>
   </nav>
 
   <script type="module" src="/assets/js/app.js"></script>
