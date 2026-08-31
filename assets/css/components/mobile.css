@@ -20,23 +20,19 @@
 
   /* ========================================================================
      2. Шапка
-     Скрывается при прокрутке вниз и возвращается при прокрутке вверх:
-     на узком экране каждый пиксель по вертикали на счету.
+     Компактная и липкая. Скрытие при прокрутке намеренно НЕ делаем:
+     любой transform на шапке превращает её в containing block, и панель
+     меню (position: fixed) начинает позиционироваться от шапки, а не от
+     экрана — из-за этого меню не открывалось после прокрутки вниз.
      ====================================================================== */
   @media (max-width: 63.99rem) {
     .header {
-      transition: transform var(--dur-base) var(--ease-out);
-      will-change: transform;
-    }
-
-    /* Класс ставит JS после прокрутки вниз более чем на высоту шапки. */
-    .is-header-hidden .header {
-      transform: translateY(-100%);
-    }
-
-    /* Меню открыто — шапку не убираем, иначе кнопка закрытия уедет. */
-    .is-nav-open .header {
-      transform: none;
+      /* backdrop-filter, как и transform, создаёт containing block для
+         position: fixed. Панель меню вложена в шапку, поэтому на мобильном
+         оставляем надёжный непрозрачный фон без фильтра. */
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      background-color: var(--color-surface);
     }
 
     .header__inner {
@@ -63,6 +59,9 @@
       padding-inline: var(--sp-3);
       border-color: var(--color-border-strong);
       background-color: var(--color-surface-2);
+      /* Прижимаем к правому краю: логотип слева, кнопка меню справа —
+         привычная и предсказуемая раскладка шапки. */
+      margin-inline-start: auto;
     }
 
     .nav__toggle-text {
@@ -336,14 +335,15 @@
     }
   }
 
+  /* Только прозрачность: transform на самой панели сделал бы её containing
+     block для собственного position: fixed, и панель привязалась бы к шапке
+     вместо экрана. Поэтому «выезд» не анимируем. */
   @keyframes nav-slide {
     from {
       opacity: 0;
-      transform: translateY(-1rem);
     }
     to {
       opacity: 1;
-      transform: none;
     }
   }
 
@@ -533,6 +533,19 @@
   }
 
   /* ========================================================================
+     7a. Строка показателей на первом экране
+     Число и подпись выравниваем по центру: иначе крупная цифра с плотным
+     трекингом вставала левее подписи и текст казался съехавшим.
+     ====================================================================== */
+  @media (max-width: 47.99rem) {
+    .hero__trust > li {
+      align-items: center;
+      text-align: center;
+      padding-inline: var(--sp-2);
+    }
+  }
+
+  /* ========================================================================
      8. Формы
      ====================================================================== */
   @media (max-width: 47.99rem) {
@@ -545,8 +558,55 @@
       font-size: 1rem;
     }
 
+    /* Поля даты и времени на iOS имеют собственную ширину и вылезают за
+       контейнер. Приводим их к общей ширине блока. */
+    .form__input[type="date"],
+    .form__input[type="time"],
+    select.form__input {
+      inline-size: 100%;
+      max-inline-size: 100%;
+      min-inline-size: 0;
+    }
+
+    /* Две колонки даты/времени в узкой форме тесноваты — ставим в столбик. */
+    .form__grid--2 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
     .booking__note {
       font-size: var(--fs-300);
+    }
+
+    /* Подсказка про субботу/воскресенье появляется мягко, а не рывком. */
+    @media (prefers-reduced-motion: no-preference) {
+      .booking__note:not([hidden]) {
+        animation: note-in var(--dur-base) var(--ease-out);
+      }
+
+      /* Список времени плавно проявляется, когда его заполнил выбор даты. */
+      [data-booking] select[name="time"]:not(:disabled) {
+        animation: field-in var(--dur-base) var(--ease-out);
+      }
+    }
+  }
+
+  @keyframes note-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.35rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes field-in {
+    from {
+      opacity: 0.35;
+    }
+    to {
+      opacity: 1;
     }
   }
 

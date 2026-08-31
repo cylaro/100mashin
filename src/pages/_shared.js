@@ -390,7 +390,7 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
           <div class="form__grid form__grid--2">
             <div class="form__row">
               <label class="form__label" for="${id}-date">
-                Дата визита <span class="req" aria-hidden="true">*</span>
+                Дата визита <span class="form__req" aria-hidden="true">*</span>
               </label>
               <input class="form__input" id="${id}-date" name="date" type="date" required>
               <p class="form__error" id="${id}-date-err" hidden></p>
@@ -398,7 +398,7 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
 
             <div class="form__row">
               <label class="form__label" for="${id}-time">
-                Время <span class="req" aria-hidden="true">*</span>
+                Время <span class="form__req" aria-hidden="true">*</span>
               </label>
               <select class="form__input" id="${id}-time" name="time" required data-autofill>
                 <option value="">Сначала выберите дату</option>
@@ -409,7 +409,7 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
 
           <div class="form__row">
             <label class="form__label" for="${id}-service">
-              Что нужно сделать <span class="req" aria-hidden="true">*</span>
+              Что нужно сделать <span class="form__req" aria-hidden="true">*</span>
             </label>
             <input class="form__input" id="${id}-service" name="service" type="text" required
                    value="${service}"
@@ -433,7 +433,7 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
 
           <div class="form__row">
             <label class="form__label" for="${id}-phone">
-              Телефон <span class="req" aria-hidden="true">*</span>
+              Телефон <span class="form__req" aria-hidden="true">*</span>
             </label>
             <input class="form__input" id="${id}-phone" name="phone" type="tel" required
                    inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00">

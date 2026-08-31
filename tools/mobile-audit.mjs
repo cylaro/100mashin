@@ -41,13 +41,29 @@ const PAGES = [
   '/',
   '/ceny/',
   '/uslugi/',
+  '/uslugi/avtostekla/',
+  '/uslugi/diagnostika/',
+  '/uslugi/elektrika/',
+  '/uslugi/hodovaya-tormoza/',
+  '/uslugi/konditsioner/',
+  '/uslugi/kuzovnoy-remont/',
+  '/uslugi/remont-dvigatelya/',
+  '/uslugi/remont-forsunok/',
   '/uslugi/remont-gbc/',
+  '/uslugi/remont-turbin/',
+  '/uslugi/shinomontazh/',
+  '/uslugi/to/',
+  '/uslugi/transmissiya/',
+  '/uslugi/udalenie-katalizatora/',
+  '/uslugi/zamena-grm/',
   '/kontakty/',
   '/otzyvy/',
   '/garantiya/',
   '/gruzovoy-servis/',
   '/raboty/',
   '/o-nas/',
+  '/spasibo/',
+  '/yuridicheskim-licam/',
   '/politika/',
   '/404.html'
 ];
@@ -158,6 +174,83 @@ const PROBE = `(() => {
   return res;
 })()`;
 
+/** Регрессии, которые нельзя обнаружить одним замером в исходном состоянии. */
+const INTERACTION_PROBE = `(async () => {
+  const waitFrame = () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  const panel = document.querySelector('[data-nav-panel]');
+  const close = document.querySelector('[data-nav-close]');
+
+  const closeMenu = async () => {
+    if (panel && !panel.hidden) {
+      close?.click();
+      await waitFrame();
+    }
+  };
+
+  const tryOpen = async (selector, y) => {
+    await closeMenu();
+    window.scrollTo(0, y);
+    await waitFrame();
+    const opener = document.querySelector(selector);
+    if (!opener || getComputedStyle(opener).display === 'none') return null;
+    const r = opener.getBoundingClientRect();
+    const x = r.left + r.width / 2;
+    const cy = r.top + r.height / 2;
+    const hit = document.elementFromPoint(x, cy);
+    const hittable = !!hit && (hit === opener || opener.contains(hit));
+    opener.click();
+    await waitFrame();
+    const pr = panel?.getBoundingClientRect();
+    const result = {
+      hittable,
+      open: !!panel && !panel.hidden,
+      expanded: opener.hasAttribute('data-nav-toggle')
+        ? opener.getAttribute('aria-expanded') === 'true'
+        : document.documentElement.classList.contains('is-nav-open'),
+      panelTop: pr ? Math.round(pr.top) : null,
+      panelLeft: pr ? Math.round(pr.left) : null,
+      panelRight: pr ? Math.round(pr.right) : null,
+      panelHeight: pr ? Math.round(pr.height) : null
+    };
+    await closeMenu();
+    return result;
+  };
+
+  const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+  const deep = Math.min(maxScroll, 1200);
+  const topStart = await tryOpen('[data-nav-toggle]', 0);
+  const topAfterScroll = await tryOpen('[data-nav-toggle]', deep);
+  const bottomAfterScroll = await tryOpen('[data-nav-open]', deep);
+
+  let date = null;
+  const dateEl = document.querySelector('[data-booking] input[type="date"]');
+  if (dateEl) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const iso = [yesterday.getFullYear(), String(yesterday.getMonth() + 1).padStart(2, '0'),
+      String(yesterday.getDate()).padStart(2, '0')].join('-');
+    dateEl.value = iso;
+    dateEl.dispatchEvent(new Event('input', { bubbles: true }));
+    await waitFrame();
+    const note = document.querySelector('[data-booking-note]');
+    const time = document.querySelector('[data-booking] select[name="time"]');
+    date = {
+      min: dateEl.min,
+      max: dateEl.max,
+      value: dateEl.value,
+      noteHidden: note?.hidden ?? null,
+      noteText: note?.textContent || '',
+      pastRejected: !!note && !note.hidden && /прошла/i.test(note.textContent),
+      timeDisabled: !!time?.disabled
+    };
+    dateEl.value = '';
+    dateEl.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  window.scrollTo(0, 0);
+  return { topStart, topAfterScroll, bottomAfterScroll, date };
+})()`;
+
 async function main() {
   // Локальный сервер
   const server = spawn('python', ['-m', 'http.server', String(PORT)], {
@@ -217,6 +310,8 @@ async function main() {
 
     await send('Page.enable');
     await send('Runtime.enable');
+    await send('Network.enable');
+    await send('Network.setCacheDisabled', { cacheDisabled: true });
 
     for (const vp of VIEWPORTS) {
       for (const page of PAGES) {
@@ -276,6 +371,46 @@ async function main() {
             detail: 'меню скрыто, а кнопки-гамбургера нет — навигация недоступна'
           });
         }
+
+        if (vp.w < 768) {
+          const interactionResult = await send('Runtime.evaluate', {
+            expression: INTERACTION_PROBE,
+            awaitPromise: true,
+            returnByValue: true
+          });
+          const interaction = interactionResult?.result?.result?.value;
+          for (const [name, state] of Object.entries({
+            'верхняя кнопка в начале страницы': interaction?.topStart,
+            'верхняя кнопка после прокрутки': interaction?.topAfterScroll,
+            'нижняя кнопка после прокрутки': interaction?.bottomAfterScroll
+          })) {
+            if (!state) continue;
+            const fitsViewport = Math.abs(state.panelTop) <= 1 && Math.abs(state.panelLeft) <= 1 &&
+              Math.abs(state.panelRight - vp.w) <= 1 && state.panelHeight >= vp.h - 1;
+            if (!state.hittable || !state.open || !state.expanded || !fitsViewport) {
+              findings.push({
+                vp: vp.name,
+                page,
+                kind: 'interaction',
+                detail: `${name}: hit=${state.hittable}, open=${state.open}, expanded=${state.expanded}, ` +
+                  `panel=${state.panelLeft}..${state.panelRight} / top ${state.panelTop}, h ${state.panelHeight}`
+              });
+            }
+          }
+          if (interaction?.date && (!interaction.date.min || !interaction.date.max ||
+              !interaction.date.pastRejected || !interaction.date.timeDisabled)) {
+            findings.push({
+              vp: vp.name,
+              page,
+              kind: 'date',
+              detail: `min=${interaction.date.min || 'нет'}, max=${interaction.date.max || 'нет'}, ` +
+                `value=${interaction.date.value || 'нет'}, noteHidden=${interaction.date.noteHidden}, ` +
+                `note=${JSON.stringify(interaction.date.noteText)}, прошлая отклонена=${interaction.date.pastRejected}, ` +
+                `время заблокировано=${interaction.date.timeDisabled}`
+            });
+          }
+        }
+
       }
     }
 
@@ -297,6 +432,8 @@ async function main() {
     font: 'СЛИШКОМ МЕЛКИЙ ТЕКСТ (<12px)',
     sticky: 'ЛИПКАЯ ПАНЕЛЬ ПЕРЕКРЫВАЕТ КОНТЕНТ',
     nav: 'НЕДОСТУПНАЯ НАВИГАЦИЯ',
+    interaction: 'МОБИЛЬНОЕ МЕНЮ НЕ ОТКРЫВАЕТСЯ',
+    date: 'ОГРАНИЧЕНИЯ ДАТЫ НЕ РАБОТАЮТ',
     probe: 'ОШИБКА ЗАМЕРА'
   };
 

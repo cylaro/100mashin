@@ -7,7 +7,6 @@
  */
 import { initAnalytics } from './analytics.js';
 import { initNav } from './nav.js';
-import { initHeaderScroll } from './header-scroll.js';
 import { initDeeplinks } from './deeplinks.js';
 import { initForms } from './form.js';
 import { initBooking } from './booking.js';
@@ -39,7 +38,6 @@ function boot() {
   safe('year', () => fillYear(root));
   safe('analytics', () => initAnalytics(root));
   safe('nav', () => initNav(root));
-  safe('header-scroll', () => initHeaderScroll(root));
   safe('deeplinks', () => initDeeplinks(root));
   safe('tabs', () => initTabs(root));
   safe('forms', () => initForms(root));

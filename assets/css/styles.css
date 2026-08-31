@@ -67,6 +67,12 @@
     text-size-adjust: 100%;
     -moz-tab-size: 4;
     tab-size: 4;
+    /* Страница не должна ездить вбок при касании. overflow-x: clip не создаёт
+       контейнер прокрутки, поэтому не ломает position: sticky. Горизонтальные
+       контейнеры внутри (прайс, таблицы) прокручиваются как прежде. */
+    overflow-x: clip;
+    /* Гасим горизонтальный «резиновый» отскок на мобильных. */
+    overscroll-behavior-x: none;
   }
 
   body {
@@ -3015,12 +3021,19 @@
   }
 
   .form__label {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 2px;
+    max-inline-size: 100%;
     color: var(--color-text-strong);
     font-size: var(--fs-300);
     font-weight: var(--fw-semibold);
   }
 
-  .form__label .req {
+  .form__label .form__req {
+    display: inline;
+    inline-size: auto;
+    flex: none;
     color: var(--color-danger);
   }
 

@@ -13,8 +13,10 @@ const hasMailChannel = () => WEB3FORMS_KEY !== WEB3FORMS_PLACEHOLDER;
 
 const NOTICE = {
   sunday: 'В воскресенье мы не работаем. Выберите другой день.',
-  saturday: 'В субботу — только по предварительной записи, мы подтвердим время.',
+  saturday: 'В субботу работаем до 18:00. Выберите время из списка.',
   needDate: 'Выберите дату визита.',
+  pastDate: 'Эта дата уже прошла. Выберите сегодняшний день или позже.',
+  lateDate: 'Запись доступна на ближайшие 60 дней. Выберите более раннюю дату.',
   needTime: 'Выберите время.',
   needService: 'Выберите услугу.',
   needPhone: `Укажите телефон для подтверждения — или позвоните нам: ${PHONES.booking.display}.`,
@@ -129,22 +131,33 @@ function initOne(form) {
   // Границы даты: сегодня … сегодня + 60 дней.
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  const maxDate = new Date(today);
+  maxDate.setDate(maxDate.getDate() + SLOTS.maxDaysAhead);
   if (dateEl) {
-    const max = new Date(today);
-    max.setDate(max.getDate() + SLOTS.maxDaysAhead);
     dateEl.min = toISO(today);
-    dateEl.max = toISO(max);
+    dateEl.max = toISO(maxDate);
   }
 
   function onDate() {
     const d = parseISO(dateEl?.value);
     if (!d) {
       notice(noteBox, '', null);
+      fillTimes(timeEl, null);
+      return;
+    }
+    if (d < today) {
+      notice(noteBox, NOTICE.pastDate, 'error');
+      fillTimes(timeEl, null);
+      return;
+    }
+    if (d > maxDate) {
+      notice(noteBox, NOTICE.lateDate, 'error');
+      fillTimes(timeEl, null);
       return;
     }
     const day = d.getDay();
     if (day === 0) notice(noteBox, NOTICE.sunday, 'error');
-    else if (day === 6) notice(noteBox, NOTICE.saturday, 'pending');
+    else if (day === 6) notice(noteBox, NOTICE.saturday, 'info');
     else notice(noteBox, '', null);
     fillTimes(timeEl, d);
   }
@@ -186,6 +199,14 @@ function initOne(form) {
     const phone = field(form, 'phone')?.value?.trim();
 
     if (!d) return fail(dateEl, NOTICE.needDate);
+    // Атрибут min не мешает ввести дату вручную, поэтому прошедший день
+    // отсекаем явной проверкой.
+    const today0 = new Date();
+    today0.setHours(0, 0, 0, 0);
+    if (d < today0) return fail(dateEl, NOTICE.pastDate);
+    const latest = new Date(today0);
+    latest.setDate(latest.getDate() + SLOTS.maxDaysAhead);
+    if (d > latest) return fail(dateEl, NOTICE.lateDate);
     if (d.getDay() === 0) return fail(dateEl, NOTICE.sunday);
     if (!time) return fail(field(form, 'time'), NOTICE.needTime);
     if (!service) return fail(field(form, 'service'), NOTICE.needService);

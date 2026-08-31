@@ -116,7 +116,7 @@ ok('верхняя граница всегда больше нижней',
   CAR_CLASSES.every((c) => { const r = calcRange(990, c.k); return r.high > r.low; }));
 
 // --- слоты записи (логика booking.js) ---
-const SLOTS = { weekday: { from: '08:00', to: '18:30' }, saturday: { from: '09:00', to: '15:30' }, stepMin: 30 };
+const SLOTS = { weekday: { from: '09:00', to: '18:30' }, saturday: { from: '09:00', to: '17:30' }, stepMin: 30 };
 const pad = (n) => String(n).padStart(2, '0');
 const timeToMin = (t) => { const [h, m] = t.split(':').map(Number); return h * 60 + (m || 0); };
 const minToTime = (m) => `${pad(Math.floor(m / 60))}:${pad(m % 60)}`;
@@ -129,12 +129,12 @@ const slotsFor = (day) => {
 };
 ok('воскресенье: слотов нет', slotsFor(0).length === 0);
 const wd = slotsFor(3);
-ok('будни: 22 слота с 08:00 до 18:30',
-  wd.length === 22 && wd[0] === '08:00' && wd.at(-1) === '18:30',
+ok('будни: 20 слотов с 09:00 до 18:30',
+  wd.length === 20 && wd[0] === '09:00' && wd.at(-1) === '18:30',
   `${wd.length} слотов, ${wd[0]}–${wd.at(-1)}`);
 const sat = slotsFor(6);
-ok('суббота: сокращённые слоты 09:00–15:30',
-  sat[0] === '09:00' && sat.at(-1) === '15:30', `${sat.length} слотов`);
+ok('суббота: сокращённые слоты 09:00–17:30',
+  sat[0] === '09:00' && sat.at(-1) === '17:30', `${sat.length} слотов`);
 
 // --- телефон (логика deeplinks.js) ---
 const formatPhoneHref = (display) => {
