@@ -138,7 +138,7 @@ function initOne(form) {
     dateEl.max = toISO(maxDate);
   }
 
-  function onDate() {
+  function onDate({ clearInvalid = false } = {}) {
     const d = parseISO(dateEl?.value);
     if (!d) {
       notice(noteBox, '', null);
@@ -148,11 +148,13 @@ function initOne(form) {
     if (d < today) {
       notice(noteBox, NOTICE.pastDate, 'error');
       fillTimes(timeEl, null);
+      if (clearInvalid && dateEl) dateEl.value = '';
       return;
     }
     if (d > maxDate) {
       notice(noteBox, NOTICE.lateDate, 'error');
       fillTimes(timeEl, null);
+      if (clearInvalid && dateEl) dateEl.value = '';
       return;
     }
     const day = d.getDay();
@@ -163,8 +165,8 @@ function initOne(form) {
   }
 
   if (dateEl) {
-    dateEl.addEventListener('change', onDate);
-    dateEl.addEventListener('input', onDate);
+    dateEl.addEventListener('input', () => onDate());
+    dateEl.addEventListener('change', () => onDate({ clearInvalid: true }));
   }
     // Без даты передаём null: список слотов на сегодня к выбранной дате
   // может не относиться.

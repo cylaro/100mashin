@@ -216,11 +216,27 @@
     .contact-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    /* При нечётном количестве карточек последняя занимает весь ряд — фон
+       сетки больше не выглядит как пустая шестая карточка. */
+    .contact-grid > .contact:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
   }
 
   @media (min-width: 64rem) {
     .contact-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .contact-grid > .contact {
+      grid-column: span 2;
+    }
+
+    /* Пять карточек: три сверху, две равные снизу. */
+    .contact-grid > .contact:nth-last-child(2):nth-child(3n + 1),
+    .contact-grid > .contact:last-child:nth-child(3n + 2) {
+      grid-column: span 3;
     }
   }
 

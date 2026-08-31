@@ -157,6 +157,23 @@ const PROBE = `(() => {
   const h1 = document.querySelector('h1');
   if (h1) R.stats.h1w = Math.round(h1.getBoundingClientRect().width);
 
+  // --- 9. Последний ряд контактной сетки не оставляет пустую ячейку ---
+  const contacts = document.querySelector('.contact-grid');
+  if (contacts && window.innerWidth >= 640) {
+    const gr = contacts.getBoundingClientRect();
+    const kids = [...contacts.children].filter((el) => el.getBoundingClientRect().height > 0);
+    if (kids.length) {
+      const bottoms = kids.map((el) => el.getBoundingClientRect());
+      const lastTop = Math.max(...bottoms.map((r) => Math.round(r.top)));
+      const lastRow = bottoms.filter((r) => Math.abs(Math.round(r.top) - lastTop) < 3);
+      const left = Math.min(...lastRow.map((r) => r.left));
+      const right = Math.max(...lastRow.map((r) => r.right));
+      if (left > gr.left + 2 || right < gr.right - 2) {
+        R.problems.push('В последнем ряду контактной сетки осталась пустая ячейка');
+      }
+    }
+  }
+
   return R;
 })()`;
 

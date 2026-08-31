@@ -201,6 +201,9 @@ const INTERACTION_PROBE = `(async () => {
     opener.click();
     await waitFrame();
     const pr = panel?.getBoundingClientRect();
+    const cta = panel?.querySelector('.nav__panel-cta')?.getBoundingClientRect();
+    if (panel) panel.scrollLeft = 50;
+    await waitFrame();
     const result = {
       hittable,
       open: !!panel && !panel.hidden,
@@ -210,7 +213,10 @@ const INTERACTION_PROBE = `(async () => {
       panelTop: pr ? Math.round(pr.top) : null,
       panelLeft: pr ? Math.round(pr.left) : null,
       panelRight: pr ? Math.round(pr.right) : null,
-      panelHeight: pr ? Math.round(pr.height) : null
+      panelHeight: pr ? Math.round(pr.height) : null,
+      overflowX: panel ? Math.round(panel.scrollWidth - panel.clientWidth) : null,
+      scrollX: panel ? Math.round(panel.scrollLeft) : null,
+      ctaFits: !cta || (cta.left >= -1 && cta.right <= innerWidth + 1)
     };
     await closeMenu();
     return result;
@@ -234,7 +240,7 @@ const INTERACTION_PROBE = `(async () => {
     await waitFrame();
     const note = document.querySelector('[data-booking-note]');
     const time = document.querySelector('[data-booking] select[name="time"]');
-    date = {
+    const afterInput = {
       min: dateEl.min,
       max: dateEl.max,
       value: dateEl.value,
@@ -243,6 +249,9 @@ const INTERACTION_PROBE = `(async () => {
       pastRejected: !!note && !note.hidden && /прошла/i.test(note.textContent),
       timeDisabled: !!time?.disabled
     };
+    dateEl.dispatchEvent(new Event('change', { bubbles: true }));
+    await waitFrame();
+    date = { ...afterInput, clearedAfterChange: dateEl.value === '' };
     dateEl.value = '';
     dateEl.dispatchEvent(new Event('input', { bubbles: true }));
   }
@@ -387,18 +396,21 @@ async function main() {
             if (!state) continue;
             const fitsViewport = Math.abs(state.panelTop) <= 1 && Math.abs(state.panelLeft) <= 1 &&
               Math.abs(state.panelRight - vp.w) <= 1 && state.panelHeight >= vp.h - 1;
-            if (!state.hittable || !state.open || !state.expanded || !fitsViewport) {
+            const lockedX = state.overflowX <= 1 && state.scrollX === 0 && state.ctaFits;
+            if (!state.hittable || !state.open || !state.expanded || !fitsViewport || !lockedX) {
               findings.push({
                 vp: vp.name,
                 page,
                 kind: 'interaction',
                 detail: `${name}: hit=${state.hittable}, open=${state.open}, expanded=${state.expanded}, ` +
                   `panel=${state.panelLeft}..${state.panelRight} / top ${state.panelTop}, h ${state.panelHeight}`
+                  + `, overflowX=${state.overflowX}, scrollX=${state.scrollX}, ctaFits=${state.ctaFits}`
               });
             }
           }
           if (interaction?.date && (!interaction.date.min || !interaction.date.max ||
-              !interaction.date.pastRejected || !interaction.date.timeDisabled)) {
+              !interaction.date.pastRejected || !interaction.date.timeDisabled ||
+              !interaction.date.clearedAfterChange)) {
             findings.push({
               vp: vp.name,
               page,
@@ -406,7 +418,7 @@ async function main() {
               detail: `min=${interaction.date.min || 'нет'}, max=${interaction.date.max || 'нет'}, ` +
                 `value=${interaction.date.value || 'нет'}, noteHidden=${interaction.date.noteHidden}, ` +
                 `note=${JSON.stringify(interaction.date.noteText)}, прошлая отклонена=${interaction.date.pastRejected}, ` +
-                `время заблокировано=${interaction.date.timeDisabled}`
+                `время заблокировано=${interaction.date.timeDisabled}, очищена=${interaction.date.clearedAfterChange}`
             });
           }
         }

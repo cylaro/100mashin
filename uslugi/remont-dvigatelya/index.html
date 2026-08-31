@@ -422,7 +422,8 @@
               <label class="form__label" for="zapis-date">
                 Дата визита <span class="form__req" aria-hidden="true">*</span>
               </label>
-              <input class="form__input" id="zapis-date" name="date" type="date" required>
+              <input class="form__input" id="zapis-date" name="date" type="date" required
+                     aria-describedby="zapis-date-note">
               <p class="form__error" id="zapis-date-err" hidden></p>
             </div>
 
@@ -436,6 +437,8 @@
               <p class="form__error" id="zapis-time-err" hidden></p>
             </div>
           </div>
+
+          <p class="booking__note" id="zapis-date-note" data-booking-note hidden></p>
 
           <div class="form__row">
             <label class="form__label" for="zapis-service">
@@ -476,8 +479,6 @@
             <textarea class="form__input" id="zapis-comment" name="comment" rows="3"
                       placeholder="Что беспокоит, когда началось, что уже делали"></textarea>
           </div>
-
-          <p class="booking__note" data-booking-note hidden></p>
 
           <!-- Ловушка для ботов: скрыта визуально, но не display:none. -->
           <input class="form__botcheck" type="checkbox" name="botcheck"

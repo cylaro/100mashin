@@ -392,7 +392,8 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
               <label class="form__label" for="${id}-date">
                 Дата визита <span class="form__req" aria-hidden="true">*</span>
               </label>
-              <input class="form__input" id="${id}-date" name="date" type="date" required>
+              <input class="form__input" id="${id}-date" name="date" type="date" required
+                     aria-describedby="${id}-date-note">
               <p class="form__error" id="${id}-date-err" hidden></p>
             </div>
 
@@ -406,6 +407,8 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
               <p class="form__error" id="${id}-time-err" hidden></p>
             </div>
           </div>
+
+          <p class="booking__note" id="${id}-date-note" data-booking-note hidden></p>
 
           <div class="form__row">
             <label class="form__label" for="${id}-service">
@@ -446,8 +449,6 @@ export function bookingBlock({ id = 'zapis', service = '' } = {}) {
             <textarea class="form__input" id="${id}-comment" name="comment" rows="3"
                       placeholder="Что беспокоит, когда началось, что уже делали"></textarea>
           </div>
-
-          <p class="booking__note" data-booking-note hidden></p>
 
           <!-- Ловушка для ботов: скрыта визуально, но не display:none. -->
           <input class="form__botcheck" type="checkbox" name="botcheck"

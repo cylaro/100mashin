@@ -141,7 +141,9 @@
       border: 0;
       box-shadow: none;
       overflow-y: auto;
+      overflow-x: hidden;
       overscroll-behavior: contain;
+      touch-action: pan-y;
       /* Жестовая зона снизу и вырез сверху. */
       padding-block-end: calc(var(--sp-6) + env(safe-area-inset-bottom, 0px));
     }
@@ -314,6 +316,10 @@
     /* --- призыв к действию и контакты в панели --------------------------- */
     .nav__panel-cta {
       margin: var(--sp-5) var(--gutter) 0;
+      inline-size: auto;
+      min-inline-size: 0;
+      max-inline-size: none;
+      align-self: stretch;
       min-height: 3.25rem;
       font-size: var(--fs-500);
     }
@@ -565,6 +571,31 @@
     select.form__input {
       inline-size: 100%;
       max-inline-size: 100%;
+      min-inline-size: 0;
+    }
+
+    /* WebKit на iPhone сохраняет у date собственную минимальную ширину даже
+       при width:100%. Сбрасываем нативную геометрию, но сам системный picker
+       остаётся доступен по нажатию. */
+    .form__input[type="date"] {
+      display: block;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .form__input[type="date"] {
+        inline-size: -webkit-fill-available;
+      }
+    }
+
+    .form__input[type="date"]::-webkit-date-and-time-value {
+      min-inline-size: 0;
+      text-align: start;
+    }
+
+    .form__row,
+    .form__grid > * {
       min-inline-size: 0;
     }
 
