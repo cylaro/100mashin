@@ -32,12 +32,12 @@
   <meta name="geo.placename" content="Воронеж">
   <meta name="theme-color" content="#14181c">
 
-  <link rel="icon" href="/favicon.ico" sizes="32x32">
-  <link rel="icon" href="/assets/img/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="../favicon.ico" sizes="32x32">
+  <link rel="icon" href="../assets/img/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../manifest.webmanifest">
 
-  <link rel="preload" href="/assets/fonts/golos-text-cyrillic-wght.woff2" as="font"
+  <link rel="preload" href="../assets/fonts/golos-text-cyrillic-wght.woff2" as="font"
         type="font/woff2" crossorigin>
 
   <style>
@@ -46,10 +46,10 @@
     body { margin: 0; }
   </style>
 
-  <link rel="stylesheet" href="/assets/css/styles.css">
-  <link rel="stylesheet" href="/assets/css/components/hero.css">
-  <link rel="stylesheet" href="/assets/css/components/blocks.css">
-  <link rel="stylesheet" href="/assets/css/components/mobile.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/components/hero.css">
+  <link rel="stylesheet" href="../assets/css/components/blocks.css">
+  <link rel="stylesheet" href="../assets/css/components/mobile.css">
 
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему у вас два названия — «100 Машин» и «СТО Машин»?","acceptedAnswer":{"@type":"Answer","text":"Исторически так сложилось: площадка на улице Димитрова открылась первой и известна как «СТО Машин», а площадка на проспекте Труда работает под названием «100 Машин». Это одна компания и один собственник, поэтому мы объединили обе площадки на одном сайте, чтобы не путать людей."}},{"@type":"Question","name":"На какой площадке лучше записываться?","acceptedAnswer":{"@type":"Answer","text":"Зависит от работы и от того, откуда вам удобнее ехать. На Димитрова — магазин запчастей и грузовое направление. На проспекте Труда — легковой ремонт, ближе к северной части города. При записи подскажем, куда приезжать: часть работ выполняется на оснащённой площадке."}},{"@type":"Question","name":"Сколько человек работает в сервисе?","acceptedAnswer":{"@type":"Answer","text":"17 сотрудников по данным отчётности за 2025 год. Штат растёт: в 2023 году было 8, в 2024 — 14. Это открытая информация из государственной отчётности, её можно проверить по ИНН 3666230820."}},{"@type":"Question","name":"Можно ли подождать машину в сервисе?","acceptedAnswer":{"@type":"Answer","text":"Да, есть зона ожидания с Wi-Fi и кофе. Для коротких работ — замены масла, шиномонтажа, диагностики — это удобно: не нужно уезжать и возвращаться."}},{"@type":"Question","name":"Есть ли доступ для маломобильных посетителей?","acceptedAnswer":{"@type":"Answer","text":"Скажем честно: специально оборудованного доступа для въезда на инвалидной коляске на обеих площадках нет. Если вам нужна помощь, позвоните заранее +7 (920) 448-00-04 — постараемся организовать приём так, чтобы вам было удобно."}}]}</script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://100mashin.ru/"},{"@type":"ListItem","position":2,"name":"О сервисе"}]}</script>
@@ -85,7 +85,7 @@
 
   <header class="header">
     <div class="container header__inner">
-      <a class="header__logo" href="/" aria-label="100 Машин — автосервис в Воронеже, на главную">
+      <a class="header__logo" href="../" aria-label="100 Машин — автосервис в Воронеже, на главную">
         <svg class="logo__mark" viewBox="0 0 168 40" width="168" height="40" role="img"
              aria-label="100 Машин">
           <text x="0" y="21" font-family="Golos Text, system-ui, Arial, sans-serif"
@@ -122,7 +122,7 @@
 
           <ul class="nav__list" role="list">
             <li class="nav__item dropdown">
-              <a class="nav__link dropdown__toggle" href="/uslugi/">
+              <a class="nav__link dropdown__toggle" href="../uslugi/">
                 Услуги
                 <svg class="dropdown__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" stroke-width="1.8"
@@ -138,33 +138,33 @@
                 <span class="visually-hidden">Показать все услуги</span>
               </button>
               <ul class="dropdown__menu" id="nav-services" role="list">
-                <li><a class="dropdown__link" href="/uslugi/diagnostika/">Компьютерная диагностика</a></li>
-                <li><a class="dropdown__link" href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
-                <li><a class="dropdown__link" href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
-                <li><a class="dropdown__link" href="/uslugi/remont-turbin/">Ремонт турбин</a></li>
-                <li><a class="dropdown__link" href="/uslugi/zamena-grm/">Замена ГРМ</a></li>
-                <li><a class="dropdown__link" href="/uslugi/remont-forsunok/">Ремонт форсунок</a></li>
-                <li><a class="dropdown__link" href="/uslugi/udalenie-katalizatora/">Удаление катализатора</a></li>
-                <li><a class="dropdown__link" href="/uslugi/transmissiya/">КПП и сцепление</a></li>
-                <li><a class="dropdown__link" href="/uslugi/hodovaya-tormoza/">Ходовая и тормоза</a></li>
-                <li><a class="dropdown__link" href="/uslugi/elektrika/">Автоэлектрика</a></li>
-                <li><a class="dropdown__link" href="/uslugi/to/">Техобслуживание</a></li>
-                <li><a class="dropdown__link" href="/uslugi/konditsioner/">Кондиционер</a></li>
-                <li><a class="dropdown__link" href="/uslugi/kuzovnoy-remont/">Кузовной ремонт</a></li>
-                <li><a class="dropdown__link" href="/uslugi/avtostekla/">Автостёкла</a></li>
-                <li><a class="dropdown__link" href="/uslugi/shinomontazh/">Шиномонтаж</a></li>
+                <li><a class="dropdown__link" href="../uslugi/diagnostika/">Компьютерная диагностика</a></li>
+                <li><a class="dropdown__link" href="../uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
+                <li><a class="dropdown__link" href="../uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
+                <li><a class="dropdown__link" href="../uslugi/remont-turbin/">Ремонт турбин</a></li>
+                <li><a class="dropdown__link" href="../uslugi/zamena-grm/">Замена ГРМ</a></li>
+                <li><a class="dropdown__link" href="../uslugi/remont-forsunok/">Ремонт форсунок</a></li>
+                <li><a class="dropdown__link" href="../uslugi/udalenie-katalizatora/">Удаление катализатора</a></li>
+                <li><a class="dropdown__link" href="../uslugi/transmissiya/">КПП и сцепление</a></li>
+                <li><a class="dropdown__link" href="../uslugi/hodovaya-tormoza/">Ходовая и тормоза</a></li>
+                <li><a class="dropdown__link" href="../uslugi/elektrika/">Автоэлектрика</a></li>
+                <li><a class="dropdown__link" href="../uslugi/to/">Техобслуживание</a></li>
+                <li><a class="dropdown__link" href="../uslugi/konditsioner/">Кондиционер</a></li>
+                <li><a class="dropdown__link" href="../uslugi/kuzovnoy-remont/">Кузовной ремонт</a></li>
+                <li><a class="dropdown__link" href="../uslugi/avtostekla/">Автостёкла</a></li>
+                <li><a class="dropdown__link" href="../uslugi/shinomontazh/">Шиномонтаж</a></li>
               </ul>
             </li>
-            <li class="nav__item"><a class="nav__link" href="/ceny/">Цены</a></li>
-            <li class="nav__item"><a class="nav__link" href="/garantiya/">Гарантия</a></li>
-            <li class="nav__item"><a class="nav__link" href="/raboty/">Работы</a></li>
-            <li class="nav__item"><a class="nav__link" href="/otzyvy/">Отзывы</a></li>
-            <li class="nav__item"><a class="nav__link" href="/gruzovoy-servis/">Грузовым</a></li>
-            <li class="nav__item"><a class="nav__link" href="/o-nas/" aria-current="page">О сервисе</a></li>
-            <li class="nav__item"><a class="nav__link" href="/kontakty/">Контакты</a></li>
+            <li class="nav__item"><a class="nav__link" href="../ceny/">Цены</a></li>
+            <li class="nav__item"><a class="nav__link" href="../garantiya/">Гарантия</a></li>
+            <li class="nav__item"><a class="nav__link" href="../raboty/">Работы</a></li>
+            <li class="nav__item"><a class="nav__link" href="../otzyvy/">Отзывы</a></li>
+            <li class="nav__item"><a class="nav__link" href="../gruzovoy-servis/">Грузовым</a></li>
+            <li class="nav__item"><a class="nav__link" href="../o-nas/" aria-current="page">О сервисе</a></li>
+            <li class="nav__item"><a class="nav__link" href="../kontakty/">Контакты</a></li>
           </ul>
 
-          <a class="btn btn--primary btn--block nav__panel-cta" href="/kontakty/#zapis">
+          <a class="btn btn--primary btn--block nav__panel-cta" href="../kontakty/#zapis">
             Записаться на ремонт
           </a>
 
@@ -177,7 +177,7 @@
       </nav>
 
       <div class="header__actions" data-section="header">
-        <a class="btn btn--primary nav__cta" href="/kontakty/#zapis">Записаться</a>
+        <a class="btn btn--primary nav__cta" href="../kontakty/#zapis">Записаться</a>
       </div>
     </div>
   </header>
@@ -185,7 +185,7 @@
   <main id="main">
     <nav class="breadcrumbs container" aria-label="Хлебные крошки">
       <ol>
-        <li><a href="/">Главная</a></li>
+        <li><a href="../">Главная</a></li>
         <li><span aria-current="page">О сервисе</span></li>
       </ol>
     </nav>
@@ -199,8 +199,8 @@
             и коммерческий транспорт.
           </p>
           <div class="hero__actions" data-section="hero">
-            <a class="btn btn--primary btn--lg" href="/kontakty/">Контакты и адреса</a>
-            <a class="btn btn--secondary btn--lg" href="/otzyvy/">Отзывы</a>
+            <a class="btn btn--primary btn--lg" href="../kontakty/">Контакты и адреса</a>
+            <a class="btn btn--secondary btn--lg" href="../otzyvy/">Отзывы</a>
           </div>
           <ul class="hero__trust" role="list">
             <li><b>с 2018</b><span>года в Воронеже</span></li>
@@ -287,7 +287,7 @@
               <li>Документы с НДС для организаций</li>
             </ul>
             <p class="text-sm">
-              <a href="/ceny/">Прайс</a> · <a href="/garantiya/">Гарантия</a>
+              <a href="../ceny/">Прайс</a> · <a href="../garantiya/">Гарантия</a>
             </p>
           </div>
         </div>
@@ -614,7 +614,7 @@
                    aria-describedby="zapis-consent-err">
             <label class="form__consent-label" for="zapis-consent">
               Я согласен на обработку моих персональных данных и принимаю условия
-              <a href="/politika/">Политики обработки персональных данных</a>.
+              <a href="../politika/">Политики обработки персональных данных</a>.
             </label>
             <p class="form__error" id="zapis-consent-err" hidden></p>
           </div>
@@ -706,29 +706,29 @@
         <div>
           <h2 class="footer__col-title">Услуги</h2>
           <ul class="footer__list" role="list">
-            <li><a href="/uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
-            <li><a href="/uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
-            <li><a href="/uslugi/remont-turbin/">Ремонт турбин</a></li>
-            <li><a href="/uslugi/zamena-grm/">Замена ГРМ</a></li>
-            <li><a href="/uslugi/transmissiya/">КПП и сцепление</a></li>
-            <li><a href="/uslugi/hodovaya-tormoza/">Ходовая и тормоза</a></li>
-            <li><a href="/uslugi/kuzovnoy-remont/">Кузовной ремонт</a></li>
-            <li><a href="/uslugi/shinomontazh/">Шиномонтаж</a></li>
-            <li><a href="/uslugi/">Все услуги</a></li>
+            <li><a href="../uslugi/remont-dvigatelya/">Ремонт двигателя</a></li>
+            <li><a href="../uslugi/remont-gbc/">Ремонт ГБЦ</a></li>
+            <li><a href="../uslugi/remont-turbin/">Ремонт турбин</a></li>
+            <li><a href="../uslugi/zamena-grm/">Замена ГРМ</a></li>
+            <li><a href="../uslugi/transmissiya/">КПП и сцепление</a></li>
+            <li><a href="../uslugi/hodovaya-tormoza/">Ходовая и тормоза</a></li>
+            <li><a href="../uslugi/kuzovnoy-remont/">Кузовной ремонт</a></li>
+            <li><a href="../uslugi/shinomontazh/">Шиномонтаж</a></li>
+            <li><a href="../uslugi/">Все услуги</a></li>
           </ul>
         </div>
 
         <div>
           <h2 class="footer__col-title">Компания</h2>
           <ul class="footer__list" role="list">
-            <li><a href="/ceny/">Цены и нормочас</a></li>
-            <li><a href="/garantiya/">Гарантия на работы</a></li>
-            <li><a href="/raboty/">Наши работы</a></li>
-            <li><a href="/otzyvy/">Отзывы</a></li>
-            <li><a href="/gruzovoy-servis/">Грузовой сервис</a></li>
-            <li><a href="/yuridicheskim-licam/">Юридическим лицам</a></li>
-            <li><a href="/o-nas/">О сервисе</a></li>
-            <li><a href="/kontakty/">Контакты</a></li>
+            <li><a href="../ceny/">Цены и нормочас</a></li>
+            <li><a href="../garantiya/">Гарантия на работы</a></li>
+            <li><a href="../raboty/">Наши работы</a></li>
+            <li><a href="../otzyvy/">Отзывы</a></li>
+            <li><a href="../gruzovoy-servis/">Грузовой сервис</a></li>
+            <li><a href="../yuridicheskim-licam/">Юридическим лицам</a></li>
+            <li><a href="../o-nas/">О сервисе</a></li>
+            <li><a href="../kontakty/">Контакты</a></li>
           </ul>
         </div>
 
@@ -798,7 +798,7 @@
         <p>
           Мы используем cookie и сервис Яндекс Метрика для аналитики. Продолжая
           пользоваться сайтом, вы соглашаетесь с
-          <a href="/politika/">Политикой обработки персональных данных</a>.
+          <a href="../politika/">Политикой обработки персональных данных</a>.
         </p>
         <p>© 2018–<span data-year>2026</span> Автосервис «100 Машин», Воронеж</p>
       </div>
@@ -837,6 +837,6 @@
     </button>
   </nav>
 
-  <script type="module" src="/assets/js/app.js"></script>
+  <script type="module" src="../assets/js/app.js"></script>
 </body>
 </html>

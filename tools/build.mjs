@@ -139,6 +139,29 @@ const outPathFor = (url) => {
   return path.join(url.replace(/^\/|\/$/g, ''), 'index.html');
 };
 
+/** Относительный префикс до корня сайта для страницы с данным url. */
+function relPrefix(url) {
+  const clean = url.split(/[?#]/)[0];
+  const dir = clean.endsWith('.html') ? clean.replace(/[^/]*$/, '') : clean;
+  const depth = dir.replace(/^\/|\/$/g, '').split('/').filter(Boolean).length;
+  return depth === 0 ? './' : '../'.repeat(depth);
+}
+
+/**
+ * Переписывает ссылки от корня (/assets/...) в относительные.
+ * Сайт должен одинаково работать в корне своего домена и в подкаталоге
+ * (например, cylaro.github.io/100mashin/), поэтому абсолютные пути
+ * от корня в готовом HTML недопустимы. Canonical, og: и JSON-LD
+ * не трогаем — там осознанно указан абсолютный адрес.
+ */
+function relativize(html, pageUrl) {
+  const prefix = relPrefix(pageUrl);
+  return html.replace(/\b(href|src)="\/([^"]*)"/g, (match, attr, rest) => {
+    if (rest.startsWith('/')) return match; // протокол-относительная ссылка //
+    return `${attr}="${prefix}${rest}"`;
+  });
+}
+
 async function loadPages() {
   const dir = path.join(ROOT, 'src', 'pages');
   // Файлы с подчёркиванием — вспомогательные (_shared.js), не страницы.
@@ -282,7 +305,7 @@ async function main() {
   for (const [url, html] of htmlByUrl) {
     const out = path.join(ROOT, outPathFor(url));
     await mkdir(path.dirname(out), { recursive: true });
-    await writeFile(out, html, 'utf8');
+    await writeFile(out, relativize(html, url), 'utf8');
   }
 
   await writeFile(path.join(ROOT, 'sitemap.xml'), sitemap(pages), 'utf8');

@@ -80,8 +80,11 @@ export const SLOTS = {
   maxDaysAhead: 60
 };
 
-/** Путь к прайсу от корня сайта (GitHub Pages, кастомный домен). */
-export const PRICES_URL = '/assets/data/prices.json';
+/**
+ * Путь к прайсу — относительно самого модуля, чтобы работать и в корне
+ * домена, и в подкаталоге (GitHub Pages), где пути от корня ломаются.
+ */
+export const PRICES_URL = new URL('../../assets/data/prices.json', import.meta.url).href;
 
 /** Класс авто → множитель для калькулятора оценки. */
 export const CAR_CLASSES = [
